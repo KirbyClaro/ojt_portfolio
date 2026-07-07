@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OJT Portfolio | Kirby Christian C. Claro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables for Easy Theme Management --- */
+        :root {
+            --pup-maroon: #800000;
+            --pup-gold: #f1c40f;
+            --sidebar-bg: #222222;
+            --sidebar-hover: #333333;
+            --bg-color: #f4f7f6;
+            --text-main: #333333;
+            --card-bg: #ffffff;
+            --border-radius: 8px;
+            --transition-speed: 0.3s;
+        }
+
+        /* --- Global Reset & Typography --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* --- Header Styling --- */
+        header {
+            background-color: var(--pup-maroon);
+            color: white;
+            padding: 25px 40px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-left: 4px solid var(--pup-gold);
+            padding-left: 15px;
+        }
+
+        header p {
+            font-size: 15px;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-top: 5px;
+            padding-left: 19px;
+        }
+
+        /* --- Layout Grid --- */
+        .wrapper {
+            display: flex;
+            min-height: calc(100vh - 95px); /* Full height minus header */
+        }
+
+        /* --- Sidebar Navigation --- */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            padding-top: 30px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+
+        .sidebar button {
+            width: 100%;
+            background: transparent;
+            color: #ccc;
+            border: none;
+            padding: 18px 25px;
+            text-align: left;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar button:hover {
+            background-color: var(--sidebar-hover);
+            color: white;
+        }
+
+        .sidebar button.active {
+            background-color: var(--sidebar-hover);
+            color: white;
+            border-left: 4px solid var(--pup-gold);
+            font-weight: 600;
+        }
+
+        /* --- Main Content Area --- */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Cards & UI Elements --- */
+        .section-header {
+            color: var(--pup-maroon);
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform var(--transition-speed);
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        /* --- Forms & Buttons --- */
+        label {
+            display: block;
+            font-weight: 600;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+
+        input[type="file"], input[type="date"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background-color: #fafafa;
+            transition: border-color var(--transition-speed);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--pup-maroon);
+            background-color: white;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn {
+            background-color: var(--pup-maroon);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-top: 15px;
+            transition: background-color var(--transition-speed);
+        }
+
+        .btn:hover {
+            background-color: #600000;
+        }
+
+        .empty-state {
+            padding: 20px;
+            background: #fff8e1;
+            border-left: 4px solid var(--pup-gold);
+            border-radius: 4px;
+            color: #665c00;
+        }
+
+        /* --- Lists inside About Me --- */
+        .skills-list {
+            list-style-type: none;
+            margin-top: 15px;
+        }
+
+        .skills-list li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .skills-list li::before {
+            content: "•";
+            color: var(--pup-maroon);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Kirby Christian C. Claro</h1>
+        <p>BS Computer Engineering | OJT Portfolio</p>
+    </header>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <button class="tab-link active" onclick="openTab('about')">About Me</button>
+            <button class="tab-link" onclick="openTab('requirements')">OJT Requirements</button>
+            <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
+        </nav>
+
+        <main class="main-content">
+            
+            <section id="about" class="content-section active">
+                <h2 class="section-header">Professional Profile</h2>
+                <div class="card">
+                    <p>I am a 2nd-year Computer Engineering student based in San Mateo, Rizal. I specialize in systems architecture, computer hardware maintenance, and architectural drafting. I am currently seeking OJT opportunities to apply my technical skills in a practical, industry-standard environment.</p>
+                    
+                    <h3 style="margin-top: 25px;">Core Competencies & Recent Works</h3>
+                    <ul class="skills-list">
+                        <li><strong>Systems Architecture Research:</strong> Completed comprehensive study on OS Architecture shifting from Monolithic Kernels to AI-Native scheduling.</li>
+                        <li><strong>CAD Drafting:</strong> Proficient in AutoCAD, specifically in creating detailed architectural Door and Window Schedules.</li>
+                        <li><strong>Hardware Maintenance:</strong> Experienced in advanced thermal management, including liquid metal application for high-performance computing systems.</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section id="requirements" class="content-section">
+                <h2 class="section-header">OJT Requirements</h2>
+                <p style="margin-bottom: 20px;">Upload and track the status of your essential internship documents below.</p>
+                
+                <div class="card">
+                    <h3>Memorandum of Agreement (MOA)</h3>
+                    <input type="file" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn">Upload MOA</button>
+                </div>
+
+                <div class="card">
+                    <h3>Letter of Endorsement</h3>
+                    <input type="file" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn">Upload Endorsement</button>
+                </div>
+
+                <div class="card">
+                    <h3>Letter of Intent</h3>
+                    <input type="file" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn">Upload Intent</button>
+                </div>
+            </section>
+
+            <section id="reports" class="content-section">
+                <h2 class="section-header">Weekly Progress Reports</h2>
+                
+                <div class="card">
+                    <h3>Create New Weekly Log</h3>
+                    <label for="report-date">Week Ending Date</label>
+                    <input type="date" id="report-date">
+
+                    <label for="report-text">Tasks Accomplished & Key Learnings</label>
+                    <textarea id="report-text" placeholder="Detail your daily tasks, challenges encountered, and technical skills applied this week..."></textarea>
+
+                    <label for="report-photos">Upload Evidence (Photos/Screenshots)</label>
+                    <input type="file" id="report-photos" multiple accept="image/*">
+
+                    <button class="btn" onclick="submitReport()">Save Weekly Report</button>
+                </div>
+                
+                <h3 style="margin-top: 30px; margin-bottom: 15px; color: var(--pup-maroon);">Submission History</h3>
+                <div class="empty-state">
+                    <p>No reports submitted yet. Your logged reports will appear here.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        function openTab(tabName) {
+            // Hide all content sections
+            const contents = document.querySelectorAll(".content-section");
+            contents.forEach(content => content.classList.remove("active"));
+
+            // Remove active state from sidebar buttons
+            const buttons = document.querySelectorAll(".tab-link");
+            buttons.forEach(button => button.classList.remove("active"));
+
+            // Activate chosen tab and button
+            document.getElementById(tabName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+
+        function submitReport() {
+            alert("Report frontend template working! (Requires backend to save data).");
+        }
+    </script>
+</body>
+</html>
