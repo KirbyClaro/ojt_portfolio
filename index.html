@@ -64,6 +64,8 @@
         textarea { resize: vertical; min-height: 120px; }
         .btn { background-color: var(--pup-maroon); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; transition: background-color var(--transition-speed); text-decoration: none; display: inline-block;}
         .btn:hover { background-color: #600000; }
+        .btn-delete { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; width: 100%; }
+        .btn-delete:hover { background-color: #c0392b; }
         .empty-state { padding: 20px; background: #fff8e1; border-left: 4px solid var(--pup-gold); border-radius: 4px; color: #665c00; }
 
         /* Social Links */
@@ -80,7 +82,7 @@
             background: white; border: 1px solid #eee; border-top: 4px solid var(--pup-maroon); 
             padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
             display: flex; flex-direction: column; justify-content: space-between;
-            transition: all var(--transition-speed); cursor: pointer;
+            transition: all var(--transition-speed);
         }
         .doc-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-top-color: var(--pup-gold); }
         .doc-card h4 { margin-bottom: 10px; color: var(--pup-maroon); font-size: 18px;}
@@ -129,6 +131,7 @@
     </header>
 
     <div class="wrapper">
+        <!-- Sidebar -->
         <nav class="sidebar">
             <button class="tab-link active" onclick="openTab('about')">About Me</button>
             <button class="tab-link" onclick="openTab('company')">Company Profile</button>
@@ -136,6 +139,7 @@
             <button class="tab-link" onclick="openTab('view-reqs')">View Documents</button>
             <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
             
+            <!-- Sidebar CV -->
             <div class="sidebar-cv">
                 <h4>My CV / Resume</h4>
                 <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" style="display:none;" onchange="handleCVUpload(event)">
@@ -146,8 +150,10 @@
             </div>
         </nav>
 
+        <!-- Main Content -->
         <main class="main-content">
             
+            <!-- About Me -->
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 <div class="card">
@@ -160,6 +166,7 @@
                 </div>
             </section>
 
+            <!-- Company Profile -->
             <section id="company" class="content-section">
                 <h2 class="section-header">Company Profile: NTC NCR</h2>
                 <div class="card company-header-flex">
@@ -195,6 +202,7 @@
                 </div>
             </section>
 
+            <!-- Upload Requirements -->
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements</h2>
                 <p style="margin-bottom: 20px;">Upload your official documents here. We recommend uploading multi-page PDFs for documents like MOAs.</p>
@@ -240,6 +248,7 @@
                 </div>
             </section>
 
+            <!-- View Documents -->
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
                 <p>Click on any uploaded document below to zoom in and read its contents.</p>
@@ -251,12 +260,14 @@
                 </div>
             </section>
 
+            <!-- Weekly Reports -->
             <section id="reports" class="content-section">
                 <div class="report-header-wrap">
                     <h2 class="section-header">Weekly Progress Reports</h2>
                     <button class="btn" style="margin-top: 0;" onclick="toggleReportForm()">+ Add Weekly Report</button>
                 </div>
 
+                <!-- Add Form -->
                 <div class="card" id="report-form-container" style="display: none; border-left: 4px solid var(--pup-gold);">
                     <h3>Create New Weekly Log</h3>
                     <label for="report-date">Week Ending Date</label>
@@ -267,6 +278,7 @@
                     <button class="btn" style="background-color: #777; margin-left: 10px;" onclick="toggleReportForm()">Cancel</button>
                 </div>
 
+                <!-- Report History -->
                 <div id="report-history-container">
                     <div class="empty-state" id="empty-reports">
                         <p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p>
@@ -277,6 +289,7 @@
         </main>
     </div>
 
+    <!-- Modal -->
     <div id="document-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -328,7 +341,6 @@
 
             const card = document.createElement('div');
             card.className = 'doc-card';
-            card.onclick = () => openModal(fileUrl, fileType);
             
             card.innerHTML = `
                 <div>
@@ -336,10 +348,32 @@
                     <h4>${docType}</h4>
                     <p>${file.name}</p>
                 </div>
-                <button class="btn btn-small" style="width:100%; text-align:center;">Click to View Document</button>
+                <div style="margin-top: 15px;">
+                    <button class="btn btn-small" style="width:100%; text-align:center; margin-bottom: 8px;" onclick="openModal('${fileUrl}', '${fileType}')">View Document</button>
+                    <button class="btn-delete" onclick="deleteDocument(this)">Delete File</button>
+                </div>
             `;
             docGrid.appendChild(card);
             alert(`${docType} uploaded successfully! You can view it in the View Documents tab.`);
+        }
+
+        // Delete Document Logic
+        function deleteDocument(btnElement) {
+            const password = prompt("Enter password to delete this file:");
+            
+            if (password === "admin123") {
+                const card = btnElement.closest('.doc-card');
+                card.remove();
+                
+                const docGrid = document.getElementById('doc-grid');
+                const remainingCards = docGrid.querySelectorAll('.doc-card');
+                
+                if (remainingCards.length === 0) {
+                    document.getElementById('doc-empty').style.display = 'block';
+                }
+            } else if (password !== null) {
+                alert("Incorrect password. Deletion canceled.");
+            }
         }
 
         // Modal Handling
