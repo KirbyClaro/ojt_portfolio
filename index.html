@@ -81,6 +81,14 @@
         
         /* --- Report History --- */
         .report-history-card { background: #fafafa; border-left: 4px solid #27ae60; padding: 15px; margin-bottom: 15px; border-radius: 4px; }
+
+        /* --- Company Profile Specific Styles --- */
+        .company-header-flex { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
+        .company-logo { width: 130px; height: auto; }
+        .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: var(--border-radius); border: 1px solid #eee; }
+        .bullet-list { list-style-type: none; margin-top: 10px; }
+        .bullet-list li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 18px; top: -2px; }
     </style>
 </head>
 <body>
@@ -91,14 +99,13 @@
     </header>
 
     <div class="wrapper">
-        <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <button class="tab-link active" onclick="openTab('about')">About Me</button>
+            <button class="tab-link" onclick="openTab('company')">Company Profile</button>
             <button class="tab-link" onclick="openTab('requirements')">OJT Requirements</button>
             <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
             <button class="tab-link" onclick="openTab('repository')">File Repository</button>
             
-            <!-- Sidebar CV Upload Display -->
             <div class="sidebar-cv">
                 <h4>My CV / Resume</h4>
                 <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" style="display:none;" onchange="handleCVUpload(event)">
@@ -109,25 +116,61 @@
             </div>
         </nav>
 
-        <!-- Main Content Area -->
         <main class="main-content">
             
-            <!-- About Me Section -->
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 <div class="card">
                     <p>I am a 2nd-year Computer Engineering student based in San Mateo, Rizal. I specialize in systems architecture, computer hardware maintenance, and architectural drafting. I am currently seeking OJT opportunities to apply my technical skills in a practical, industry-standard environment.</p>
                     
-                    <!-- Social Links Added Here -->
                     <div class="social-links">
-                        <a href="https://facebook.com/kirby.claro.2025/" target="_blank" class="social-btn bg-fb">Facebook</a>
-                        <a href="https://github.com/KirbyClaro" target="_blank" class="social-btn bg-git">GitHub</a>
-                        <a href="mailto:kirbychristianclaro@gmail.com" class="social-btn bg-gmail">Gmail</a>
+                        <a href="https://facebook.com/yourprofile" target="_blank" class="social-btn bg-fb">Facebook</a>
+                        <a href="https://github.com/yourgithub" target="_blank" class="social-btn bg-git">GitHub</a>
+                        <a href="mailto:youremail@gmail.com" class="social-btn bg-gmail">Gmail</a>
                     </div>
                 </div>
             </section>
 
-            <!-- OJT Requirements Section -->
+            <section id="company" class="content-section">
+                <h2 class="section-header">Company Profile: NTC NCR</h2>
+                
+                <div class="card company-header-flex">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/National_Telecommunications_Commission_%28NTC%29.svg/240px-National_Telecommunications_Commission_%28NTC%29.svg.png" alt="NTC Logo" class="company-logo">
+                    <div>
+                        <h3 style="margin-bottom: 5px; color: var(--pup-maroon); font-size: 22px;">National Telecommunications Commission</h3>
+                        <p style="font-weight: 600; font-size: 16px; color: #555;">National Capital Region (NCR) Branch</p>
+                        <p style="font-size: 14px; margin-top: 10px; max-width: 600px;">The NTC is the primary government agency entrusted with the oversight, adjudication, and control of all telecommunications services, television, and radio networks throughout the Philippines.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>NTC NCR Office</h3>
+                    <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop" alt="NTC NCR Building" class="building-img">
+                    <p style="font-size: 13px; color: #888; margin-top: 10px;"><em>* Developer Note: To update this image, replace the "src" URL in the code with the file name of your actual NTC NCR building photo (e.g., src="ntc-ncr-building.jpg").</em></p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+                    <div class="card">
+                        <h3>Our Vision</h3>
+                        <p>By 2025, the NTC is a world-class regulatory agency meeting the challenges of the digital world.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Our Mission</h3>
+                        <p>Maintain a responsive regulatory environment for an effective telecommunications/Information and Communications Technology (ICT) sector.</p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Agency Mandate & Core Functions</h3>
+                    <ul class="bullet-list">
+                        <li>Regulate the installation, operation, and maintenance of radio stations for both private and public use.</li>
+                        <li>Regulate and supervise the provision of public telecommunications services.</li>
+                        <li>Manage the national radio frequency spectrum.</li>
+                        <li>Regulate and supervise radio and television broadcast stations, including cable (CATV) and pay television.</li>
+                    </ul>
+                </div>
+            </section>
+
             <section id="requirements" class="content-section">
                 <h2 class="section-header">OJT Requirements</h2>
                 <p style="margin-bottom: 20px;">Select your documents below. Once chosen, they will be viewable in the File Repository.</p>
@@ -148,7 +191,6 @@
                 </div>
             </section>
 
-            <!-- Weekly Reports Section -->
             <section id="reports" class="content-section">
                 <h2 class="section-header">Weekly Progress Reports</h2>
                 
@@ -174,7 +216,6 @@
                 </div>
             </section>
 
-            <!-- NEW: File Repository Section -->
             <section id="repository" class="content-section">
                 <h2 class="section-header">File Repository</h2>
                 <p>All your uploaded documents, CVs, and report evidence are centrally stored here for quick access.</p>
@@ -183,7 +224,6 @@
                     <div class="empty-state" id="repo-empty" style="grid-column: 1 / -1;">
                         No files uploaded yet. Select files in the Requirements or Sidebar to see them here.
                     </div>
-                    <!-- JavaScript will inject file cards here -->
                 </div>
             </section>
 
@@ -191,7 +231,6 @@
     </div>
 
     <script>
-        // Tab Navigation Logic
         function openTab(tabName) {
             const contents = document.querySelectorAll(".content-section");
             contents.forEach(content => content.classList.remove("active"));
@@ -203,24 +242,18 @@
             event.currentTarget.classList.add("active");
         }
 
-        // Logic to Handle CV Upload specifically for the Sidebar
         function handleCVUpload(event) {
             const file = event.target.files[0];
             if (file) {
                 const fileUrl = URL.createObjectURL(file);
-                
-                // Show the link in the sidebar
                 const linkContainer = document.getElementById('cv-display-link');
                 const linkAnchor = document.getElementById('cv-link');
                 linkAnchor.href = fileUrl;
                 linkContainer.style.display = 'block';
-
-                // Also add it to the Global Repository
                 addCardToRepoGrid(file, fileUrl, 'Curriculum Vitae (CV)');
             }
         }
 
-        // Logic to Add Files to the Centralized Repository Tab
         function addToRepository(event, categoryName) {
             const file = event.target.files[0];
             if (file) {
@@ -233,7 +266,6 @@
         function addCardToRepoGrid(file, fileUrl, categoryName) {
             document.getElementById('repo-empty').style.display = 'none';
             const repoGrid = document.getElementById('repo-grid');
-
             const card = document.createElement('div');
             card.className = 'repo-card';
             card.innerHTML = `
@@ -244,7 +276,6 @@
             repoGrid.appendChild(card);
         }
 
-        // Logic to Submit a Weekly Report
         function submitReport() {
             const date = document.getElementById('report-date').value;
             const text = document.getElementById('report-text').value;
@@ -254,10 +285,7 @@
                 return;
             }
 
-            // Remove empty state
             document.getElementById('empty-reports').style.display = 'none';
-            
-            // Create history card
             const historyContainer = document.getElementById('report-history-container');
             const reportCard = document.createElement('div');
             reportCard.className = 'report-history-card';
@@ -268,7 +296,6 @@
             
             historyContainer.prepend(reportCard);
             
-            // Clear the form
             document.getElementById('report-date').value = '';
             document.getElementById('report-text').value = '';
             document.getElementById('report-photos').value = '';
