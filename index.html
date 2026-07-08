@@ -129,7 +129,6 @@
     </header>
 
     <div class="wrapper">
-        <!-- Sidebar -->
         <nav class="sidebar">
             <button class="tab-link active" onclick="openTab('about')">About Me</button>
             <button class="tab-link" onclick="openTab('company')">Company Profile</button>
@@ -137,7 +136,6 @@
             <button class="tab-link" onclick="openTab('view-reqs')">View Documents</button>
             <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
             
-            <!-- Sidebar CV -->
             <div class="sidebar-cv">
                 <h4>My CV / Resume</h4>
                 <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" style="display:none;" onchange="handleCVUpload(event)">
@@ -148,10 +146,8 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
         <main class="main-content">
             
-            <!-- About Me -->
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 <div class="card">
@@ -164,7 +160,6 @@
                 </div>
             </section>
 
-            <!-- Company Profile -->
             <section id="company" class="content-section">
                 <h2 class="section-header">Company Profile: NTC NCR</h2>
                 <div class="card company-header-flex">
@@ -200,7 +195,6 @@
                 </div>
             </section>
 
-            <!-- Upload Requirements -->
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements</h2>
                 <p style="margin-bottom: 20px;">Upload your official documents here. We recommend uploading multi-page PDFs for documents like MOAs.</p>
@@ -219,9 +213,33 @@
                     <h3>Letter of Intent (LOI)</h3>
                     <input type="file" id="upload-intent" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Letter of Intent (LOI)')">
                 </div>
+
+                <div class="card">
+                    <h3>Medical Certificate</h3>
+                    <input type="file" id="upload-medical" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Medical Certificate')">
+                </div>
+
+                <div class="card">
+                    <h3>Insurance</h3>
+                    <input type="file" id="upload-insurance" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Insurance')">
+                </div>
+
+                <div class="card">
+                    <h3>Internship Agreement</h3>
+                    <input type="file" id="upload-agreement" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Internship Agreement')">
+                </div>
+
+                <div class="card">
+                    <h3>Student Waiver</h3>
+                    <input type="file" id="upload-waiver" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Student Waiver')">
+                </div>
+
+                <div class="card">
+                    <h3>Approval Sheet</h3>
+                    <input type="file" id="upload-approval" accept=".pdf,.jpg,.png" onchange="addDocumentCard(event, 'Approval Sheet')">
+                </div>
             </section>
 
-            <!-- View Documents -->
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
                 <p>Click on any uploaded document below to zoom in and read its contents.</p>
@@ -233,14 +251,12 @@
                 </div>
             </section>
 
-            <!-- Weekly Reports -->
             <section id="reports" class="content-section">
                 <div class="report-header-wrap">
                     <h2 class="section-header">Weekly Progress Reports</h2>
                     <button class="btn" style="margin-top: 0;" onclick="toggleReportForm()">+ Add Weekly Report</button>
                 </div>
 
-                <!-- Add Form -->
                 <div class="card" id="report-form-container" style="display: none; border-left: 4px solid var(--pup-gold);">
                     <h3>Create New Weekly Log</h3>
                     <label for="report-date">Week Ending Date</label>
@@ -251,7 +267,6 @@
                     <button class="btn" style="background-color: #777; margin-left: 10px;" onclick="toggleReportForm()">Cancel</button>
                 </div>
 
-                <!-- Report History -->
                 <div id="report-history-container">
                     <div class="empty-state" id="empty-reports">
                         <p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p>
@@ -262,7 +277,6 @@
         </main>
     </div>
 
-    <!-- Modal -->
     <div id="document-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
