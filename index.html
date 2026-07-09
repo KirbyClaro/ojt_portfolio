@@ -6,6 +6,7 @@
     <title>OJT Portfolio | Kirby Christian C. Claro</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
@@ -47,9 +48,6 @@
         .sidebar-cv h4 { color: white; margin-bottom: 10px; font-weight: 400; font-size: 15px; }
         .btn-small { background-color: var(--pup-gold); color: #222; padding: 8px 15px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; border: none;}
         .btn-small:hover { background-color: #d4ac0d; }
-        #cv-display-link { margin-top: 15px; display: none; }
-        #cv-display-link a { color: var(--pup-gold); text-decoration: none; font-size: 14px; font-weight: 600; }
-        #cv-display-link a:hover { text-decoration: underline; }
 
         /* Main Content */
         .main-content { flex: 1; padding: 40px; overflow-y: auto; }
@@ -114,12 +112,14 @@
 </head>
 <body>
 
+    <!-- Header -->
     <header>
         <h1>Kirby Christian C. Claro</h1>
         <p>BS Computer Engineering | OJT Portfolio</p>
     </header>
 
     <div class="wrapper">
+        <!-- Sidebar -->
         <nav class="sidebar">
             <button class="tab-link active" onclick="openTab('about')">About Me</button>
             <button class="tab-link" onclick="openTab('company')">Company Profile</button>
@@ -134,8 +134,10 @@
             </div>
         </nav>
 
+        <!-- Main Content -->
         <main class="main-content">
             
+            <!-- About Me -->
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 <div class="card">
@@ -148,6 +150,7 @@
                 </div>
             </section>
 
+            <!-- Company Profile -->
             <section id="company" class="content-section">
                 <h2 class="section-header">Company Profile: NTC NCR</h2>
                 <div class="card company-header-flex">
@@ -183,43 +186,54 @@
                 </div>
             </section>
 
+            <!-- Upload Requirements -->
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements</h2>
-                <p style="margin-bottom: 20px;">Upload your official documents here. We recommend uploading multi-page PDFs for documents like MOAs.</p>
+                <p style="margin-bottom: 20px;">Upload your official documents here. Select your file first, then click Upload.</p>
+                
                 <div class="card">
                     <h3>Memorandum of Agreement (MOA)</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Memorandum of Agreement (MOA)')">
+                    <input type="file" id="file-moa" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-moa', 'Memorandum of Agreement (MOA)')">Upload MOA</button>
                 </div>
                 <div class="card">
                     <h3>Letter of Endorsement (LOE)</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Letter of Endorsement (LOE)')">
+                    <input type="file" id="file-loe" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-loe', 'Letter of Endorsement (LOE)')">Upload LOE</button>
                 </div>
                 <div class="card">
                     <h3>Letter of Intent (LOI)</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Letter of Intent (LOI)')">
+                    <input type="file" id="file-loi" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-loi', 'Letter of Intent (LOI)')">Upload LOI</button>
                 </div>
                 <div class="card">
                     <h3>Medical Certificate</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Medical Certificate')">
+                    <input type="file" id="file-med" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-med', 'Medical Certificate')">Upload Medical Cert</button>
                 </div>
                 <div class="card">
                     <h3>Insurance</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Insurance')">
+                    <input type="file" id="file-ins" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-ins', 'Insurance')">Upload Insurance</button>
                 </div>
                 <div class="card">
                     <h3>Internship Agreement</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Internship Agreement')">
+                    <input type="file" id="file-int" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-int', 'Internship Agreement')">Upload Agreement</button>
                 </div>
                 <div class="card">
                     <h3>Student Waiver</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Student Waiver')">
+                    <input type="file" id="file-waiver" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-waiver', 'Student Waiver')">Upload Waiver</button>
                 </div>
                 <div class="card">
                     <h3>Approval Sheet</h3>
-                    <input type="file" accept=".pdf,.jpg,.png" onchange="uploadToFirebase(event, 'Approval Sheet')">
+                    <input type="file" id="file-app" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-app', 'Approval Sheet')">Upload Approval</button>
                 </div>
             </section>
 
+            <!-- View Documents -->
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
                 <p>Click on any uploaded document below to zoom in and read its contents.</p>
@@ -230,6 +244,7 @@
                 </div>
             </section>
 
+            <!-- Weekly Reports -->
             <section id="reports" class="content-section">
                 <div class="report-header-wrap">
                     <h2 class="section-header">Weekly Progress Reports</h2>
@@ -254,6 +269,7 @@
         </main>
     </div>
 
+    <!-- Modal -->
     <div id="document-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -261,6 +277,7 @@
         </div>
     </div>
 
+    <!-- Firebase Logic -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCT16wNKYuuR9NO7GEXrJepYiX3qQPemAY",
@@ -326,20 +343,16 @@
             });
         });
 
-        // Upload Functions
-        async function uploadToFirebase(event, docType) {
-            const file = event.target.files[0];
-            if (!file) return;
-
+        // Main Upload Process
+        async function processUpload(file, docType, fileInput) {
             const password = prompt(`Enter password to upload ${docType}:`);
             if (password !== "admin123") {
                 alert("Incorrect password. Upload canceled.");
-                event.target.value = "";
+                if(fileInput) fileInput.value = "";
                 return;
             }
 
             alert("Uploading to cloud storage... Please wait.");
-            
             const storageRef = storage.ref(`ojt-documents/${Date.now()}_${file.name}`);
             
             try {
@@ -355,10 +368,31 @@
                 });
                 
                 alert(`${docType} uploaded successfully! It is now saved in the database.`);
+                if(fileInput) fileInput.value = ""; 
             } catch (error) {
                 console.error("Error uploading: ", error);
                 alert("Failed to upload. Make sure you updated your Firebase Rules to true.");
             }
+        }
+
+        // Triggered by specific upload buttons
+        async function triggerUpload(inputId, docType) {
+            const fileInput = document.getElementById(inputId);
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert("Please choose a file first before clicking upload!");
+                return;
+            }
+            await processUpload(file, docType, fileInput);
+        }
+
+        // Triggered instantly when CV is selected (Sidebar)
+        async function handleCVUpload(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            if (!file) return;
+            await processUpload(file, 'Curriculum Vitae (CV)', fileInput);
         }
 
         async function submitReportToFirebase() {
@@ -419,10 +453,6 @@
             buttons.forEach(button => button.classList.remove("active"));
             document.getElementById(tabName).classList.add("active");
             event.currentTarget.classList.add("active");
-        }
-
-        function handleCVUpload(event) {
-            uploadToFirebase(event, 'Curriculum Vitae (CV)');
         }
 
         function openModal(fileUrl, fileType) {
