@@ -43,12 +43,6 @@
         .sidebar button.tab-link:hover { background-color: var(--sidebar-hover); color: white; }
         .sidebar button.tab-link.active { background-color: var(--sidebar-hover); color: white; border-left: 4px solid var(--pup-gold); font-weight: 600; }
 
-        /* Sidebar CV */
-        .sidebar-cv { margin-top: auto; padding: 25px; background-color: #1a1a1a; border-top: 1px solid #333; text-align: center; }
-        .sidebar-cv h4 { color: white; margin-bottom: 10px; font-weight: 400; font-size: 15px; }
-        .btn-small { background-color: var(--pup-gold); color: #222; padding: 8px 15px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; border: none;}
-        .btn-small:hover { background-color: #d4ac0d; }
-
         /* Main Content */
         .main-content { flex: 1; padding: 40px; overflow-y: auto; }
         .content-section { display: none; animation: fadeIn 0.4s ease-in-out; }
@@ -112,32 +106,22 @@
 </head>
 <body>
 
-    <!-- Header -->
     <header>
         <h1>Kirby Christian C. Claro</h1>
         <p>BS Computer Engineering | OJT Portfolio</p>
     </header>
 
     <div class="wrapper">
-        <!-- Sidebar -->
         <nav class="sidebar">
             <button class="tab-link active" onclick="openTab('about')">About Me</button>
             <button class="tab-link" onclick="openTab('company')">Company Profile</button>
             <button class="tab-link" onclick="openTab('upload-reqs')">Upload Requirements</button>
             <button class="tab-link" onclick="openTab('view-reqs')">View Documents</button>
             <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
-            
-            <div class="sidebar-cv">
-                <h4>My CV / Resume</h4>
-                <input type="file" id="cv-upload" accept=".pdf,.doc,.docx" style="display:none;" onchange="handleCVUpload(event)">
-                <label for="cv-upload" class="btn-small">Select & Upload CV</label>
-            </div>
         </nav>
 
-        <!-- Main Content -->
         <main class="main-content">
             
-            <!-- About Me -->
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 <div class="card">
@@ -150,7 +134,6 @@
                 </div>
             </section>
 
-            <!-- Company Profile -->
             <section id="company" class="content-section">
                 <h2 class="section-header">Company Profile: NTC NCR</h2>
                 <div class="card company-header-flex">
@@ -186,11 +169,15 @@
                 </div>
             </section>
 
-            <!-- Upload Requirements -->
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements</h2>
-                <p style="margin-bottom: 20px;">Upload your official documents here. Select your file first, then click Upload.</p>
+                <p style="margin-bottom: 20px;">Upload your official documents here.</p>
                 
+                <div class="card">
+                    <h3>Curriculum Vitae (CV)</h3>
+                    <input type="file" id="file-cv" accept=".pdf,.doc,.docx">
+                    <button class="btn" onclick="triggerUpload('file-cv', 'Curriculum Vitae (CV)')">Upload CV</button>
+                </div>
                 <div class="card">
                     <h3>Memorandum of Agreement (MOA)</h3>
                     <input type="file" id="file-moa" accept=".pdf,.jpg,.png">
@@ -233,10 +220,8 @@
                 </div>
             </section>
 
-            <!-- View Documents -->
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
-                <p>Click on any uploaded document below to zoom in and read its contents.</p>
                 <div class="doc-grid" id="doc-grid">
                     <div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">
                         Loading your saved documents...
@@ -244,7 +229,6 @@
                 </div>
             </section>
 
-            <!-- Weekly Reports -->
             <section id="reports" class="content-section">
                 <div class="report-header-wrap">
                     <h2 class="section-header">Weekly Progress Reports</h2>
@@ -265,11 +249,9 @@
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
-    <!-- Modal -->
     <div id="document-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -277,7 +259,6 @@
         </div>
     </div>
 
-    <!-- Firebase Logic -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyCT16wNKYuuR9NO7GEXrJepYiX3qQPemAY",
@@ -292,19 +273,16 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
-        // Fetch Documents
         db.collection("documents").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const docGrid = document.getElementById('doc-grid');
             if (snapshot.empty) {
                 docGrid.innerHTML = `<div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">No documents uploaded yet. Go to the "Upload Requirements" tab to add your files.</div>`;
                 return;
             }
-            
             docGrid.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 let iconHtml = data.fileType.includes('pdf') ? '📕' : '🖼️';
-                
                 const card = document.createElement('div');
                 card.className = 'doc-card';
                 card.innerHTML = `
@@ -322,14 +300,12 @@
             });
         });
 
-        // Fetch Reports
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const historyContainer = document.getElementById('report-history-container');
             if (snapshot.empty) {
                 historyContainer.innerHTML = `<div class="empty-state" id="empty-reports"><p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p></div>`;
                 return;
             }
-
             historyContainer.innerHTML = "";
             snapshot.forEach((doc) => {
                 const data = doc.data();
@@ -343,114 +319,56 @@
             });
         });
 
-        // Main Upload Process
-        async function processUpload(file, docType, fileInput) {
-            const password = prompt(`Enter password to upload ${docType}:`);
-            if (password !== "admin123") {
-                alert("Incorrect password. Upload canceled.");
-                if(fileInput) fileInput.value = "";
-                return;
-            }
-
-            alert("Uploading to cloud storage... Please wait.");
-            const storageRef = storage.ref(`ojt-documents/${Date.now()}_${file.name}`);
-            
-            try {
-                const snapshot = await storageRef.put(file);
-                const downloadURL = await snapshot.ref.getDownloadURL();
-                
-                await db.collection("documents").add({
-                    docType: docType,
-                    fileName: file.name,
-                    fileType: file.type,
-                    url: downloadURL,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
-                alert(`${docType} uploaded successfully! It is now saved in the database.`);
-                if(fileInput) fileInput.value = ""; 
-            } catch (error) {
-                console.error("Error uploading: ", error);
-                alert("Failed to upload. Make sure you updated your Firebase Rules to true.");
-            }
-        }
-
-        // Triggered by specific upload buttons
         async function triggerUpload(inputId, docType) {
             const fileInput = document.getElementById(inputId);
             const file = fileInput.files[0];
-            
-            if (!file) {
-                alert("Please choose a file first before clicking upload!");
-                return;
-            }
-            await processUpload(file, docType, fileInput);
-        }
+            if (!file) { alert("Please choose a file first!"); return; }
 
-        // Triggered instantly when CV is selected (Sidebar)
-        async function handleCVUpload(event) {
-            const fileInput = event.target;
-            const file = fileInput.files[0];
-            if (!file) return;
-            await processUpload(file, 'Curriculum Vitae (CV)', fileInput);
+            const password = prompt(`Enter password to upload ${docType}:`);
+            if (password !== "admin123") { alert("Incorrect password."); return; }
+
+            alert("Uploading... Please wait.");
+            const storageRef = storage.ref(`ojt-documents/${Date.now()}_${file.name}`);
+            try {
+                const snapshot = await storageRef.put(file);
+                const downloadURL = await snapshot.ref.getDownloadURL();
+                await db.collection("documents").add({
+                    docType: docType, fileName: file.name, fileType: file.type, url: downloadURL, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+                alert("Upload successful!");
+                fileInput.value = "";
+            } catch (error) { alert("Failed to upload."); }
         }
 
         async function submitReportToFirebase() {
             const date = document.getElementById('report-date').value;
             const text = document.getElementById('report-text').value;
+            if(!date || !text) { alert("Please fill all fields."); return; }
             
-            if(!date || !text) {
-                alert("Please fill in the date and text for your report.");
-                return;
-            }
-
-            const password = prompt("Enter password to submit weekly report:");
-            if (password !== "admin123") {
-                alert("Incorrect password. Submission canceled.");
-                return;
-            }
-
-            document.getElementById('submit-report-btn').innerText = "Saving...";
+            const password = prompt("Enter password:");
+            if (password !== "admin123") { alert("Incorrect password."); return; }
 
             try {
-                await db.collection("reports").add({
-                    date: date,
-                    text: text,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-                });
-                
+                await db.collection("reports").add({ date, text, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
                 document.getElementById('report-date').value = '';
                 document.getElementById('report-text').value = '';
                 toggleReportForm();
-                alert("Weekly report securely saved to the database!");
-            } catch (error) {
-                console.error("Error saving report: ", error);
-                alert("Failed to save report.");
-            } finally {
-                document.getElementById('submit-report-btn').innerText = "Submit Weekly Report";
-            }
+                alert("Report saved!");
+            } catch (error) { alert("Failed to save."); }
         }
 
         async function deleteDocumentFromFirebase(docId) {
-            const password = prompt("Enter password to delete this file permanently:");
+            const password = prompt("Enter password to delete:");
             if (password === "admin123") {
-                try {
-                    await db.collection("documents").doc(docId).delete();
-                    alert("File deleted from database.");
-                } catch (error) {
-                    console.error("Error deleting: ", error);
-                }
-            } else if (password !== null) {
-                alert("Incorrect password.");
+                try { await db.collection("documents").doc(docId).delete(); } catch (error) { alert("Error deleting."); }
             }
         }
 
-        // UI Functions
         function openTab(tabName) {
             const contents = document.querySelectorAll(".content-section");
-            contents.forEach(content => content.classList.remove("active"));
+            contents.forEach(c => c.classList.remove("active"));
             const buttons = document.querySelectorAll(".tab-link");
-            buttons.forEach(button => button.classList.remove("active"));
+            buttons.forEach(b => b.classList.remove("active"));
             document.getElementById(tabName).classList.add("active");
             event.currentTarget.classList.add("active");
         }
@@ -458,31 +376,18 @@
         function openModal(fileUrl, fileType) {
             const modal = document.getElementById('document-modal');
             const viewer = document.getElementById('modal-viewer');
-            viewer.innerHTML = '';
-            if (fileType.includes('pdf')) {
-                viewer.innerHTML = `<iframe src="${fileUrl}#toolbar=0" title="PDF Viewer"></iframe>`;
-            } else if (fileType.includes('image')) {
-                viewer.innerHTML = `<img src="${fileUrl}" class="modal-img" alt="Document Preview">`;
-            } else {
-                viewer.innerHTML = `<p>Cannot preview this file type. <a href="${fileUrl}" target="_blank">Download here</a>.</p>`;
-            }
+            viewer.innerHTML = fileType.includes('pdf') ? `<iframe src="${fileUrl}#toolbar=0"></iframe>` : `<img src="${fileUrl}" class="modal-img">`;
             modal.style.display = 'flex';
         }
 
-        function closeModal() {
-            document.getElementById('document-modal').style.display = 'none';
-            document.getElementById('modal-viewer').innerHTML = '';
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('document-modal');
-            if (event.target == modal) { closeModal(); }
-        }
-
+        function closeModal() { document.getElementById('document-modal').style.display = 'none'; }
+        
         function toggleReportForm() {
             const form = document.getElementById('report-form-container');
             form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
         }
+
+        window.onclick = function(event) { if (event.target == document.getElementById('document-modal')) closeModal(); }
     </script>
 </body>
 </html>
