@@ -59,8 +59,6 @@
         .profile-header-flex { display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
         .profile-img { width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid var(--pup-maroon); box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-shrink: 0; transition: transform var(--transition-speed), border-color var(--transition-speed); }
         .profile-img:hover { transform: scale(1.05); border-color: var(--pup-gold); }
-        
-        /* UPDATED: Justify text and add indent */
         .profile-header-flex p { flex: 1; min-width: 280px; text-align: justify; text-indent: 30px; }
 
         /* Forms & Buttons */
@@ -102,7 +100,7 @@
         
         .report-body { display: none; padding: 25px 20px; border-top: 1px solid #eee; background-color: #fff; animation: slideDown 0.3s ease-out; }
         .report-body.open { display: block; }
-        .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 20px; }
+        .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
         
         /* Photo Gallery Grid & Hover Effects */
         .report-gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
@@ -142,7 +140,7 @@
         .company-logo { width: 130px; height: auto; }
         .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: var(--border-radius); border: 1px solid #eee; }
         .bullet-list { list-style-type: none; margin-top: 10px; }
-        .bullet-list li { margin-bottom: 10px; padding-left: 20px; position: relative; }
+        .bullet-list li { margin-bottom: 10px; padding-left: 20px; position: relative; text-align: justify; }
         .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 18px; top: -2px; }
     </style>
 </head>
@@ -191,7 +189,20 @@
                         <span style="background: #039be5; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">FIREBASE</span>
                     </div>
 
-                    <div class="social-links">
+                    <!-- NEW: About This Portfolio Section -->
+                    <h3 style="margin-top: 35px;">About This Portfolio</h3>
+                    <p style="text-align: justify; text-indent: 30px; margin-bottom: 15px;">
+                        This web application serves as both my professional resume and a functional document management system for my On-the-Job Training (OJT). Rather than utilizing pre-made templates, I developed this platform entirely from scratch to demonstrate practical competency in front-end web development and cloud backend integration. 
+                    </p>
+                    <ul class="bullet-list" style="margin-bottom: 25px;">
+                        <li><strong>Frontend Architecture:</strong> Developed using standard HTML5, CSS3, and vanilla JavaScript for a lightweight, responsive, and tailored user interface.</li>
+                        <li><strong>Cloud Backend (Google Firebase):</strong> Fully integrated with Firebase as a serverless backend to handle data processing and user actions securely.</li>
+                        <li><strong>Real-Time Database Management:</strong> Utilizes Firebase Firestore (a NoSQL document database) for real-time tracking, rendering, and timestamping of weekly progress logs and document metadata.</li>
+                        <li><strong>Secure Cloud Storage:</strong> Leverages Firebase Storage to securely host and dynamically retrieve uploaded OJT requirements (such as PDFs) and weekly report photo galleries.</li>
+                        <li><strong>Core Capabilities:</strong> Features password-protected file uploading, secure document and log deletion controls, dynamic interactive galleries with hover-zoom capabilities, and real-time database syncing without requiring page reloads.</li>
+                    </ul>
+
+                    <div class="social-links" style="border-top: 1px solid #eee; padding-top: 20px;">
                         <a href="https://www.facebook.com/kirby.claro.2025/" target="_blank" class="social-btn bg-fb">Facebook</a>
                         <a href="https://github.com/KirbyClaro" target="_blank" class="social-btn bg-git">GitHub</a>
                         <a href="mailto:kirbychristianclaro@gmail.com" class="social-btn bg-gmail">Gmail</a>
