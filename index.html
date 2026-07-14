@@ -83,13 +83,22 @@
         .bg-git { background-color: #333333; }
         .bg-gmail { background-color: #EA4335; }
 
-        /* Document Grid */
-        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-top: 20px; }
-        .doc-card { background: white; border: 1px solid #eee; border-top: 4px solid var(--pup-maroon); padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: all var(--transition-speed); }
-        .doc-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); border-top-color: var(--pup-gold); }
-        .doc-card h4 { margin-bottom: 10px; color: var(--pup-maroon); font-size: 18px;}
-        .doc-card p { font-size: 13px; color: #666; margin-bottom: 20px; word-break: break-all; }
-        .doc-icon { font-size: 40px; margin-bottom: 15px; color: #bbb; text-align: center; }
+        /* Modern Document Grid */
+        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
+        .doc-card { background: white; border: none; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; transition: all var(--transition-speed); position: relative; overflow: hidden; }
+        .doc-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); }
+        .doc-card:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.12); }
+        .doc-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 15px; }
+        .doc-icon { font-size: 45px; margin-bottom: 15px; background: #fdf5f5; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--pup-maroon); }
+        .doc-info h4 { color: var(--pup-maroon); font-size: 17px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+        .file-name { font-size: 13px; color: #777; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .view-btn { width: 100%; background-color: var(--pup-maroon); border-radius: 6px; padding: 12px; font-size: 14px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .view-btn:hover { background-color: #600000; }
+        
+        /* Hidden Delete Trigger */
+        .delete-trigger { position: absolute; top: 15px; right: 15px; font-size: 16px; cursor: pointer; opacity: 0; transition: opacity 0.3s ease; color: #aaa; padding: 5px; }
+        .doc-card:hover .delete-trigger { opacity: 0.3; }
+        .delete-trigger:hover { opacity: 1 !important; color: #e74c3c; }
 
         /* Interactive Weekly Reports */
         .report-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
@@ -390,15 +399,15 @@
                 const card = document.createElement('div');
                 card.className = 'doc-card';
                 card.innerHTML = `
-                    <div>
+                    <div class="delete-trigger" onclick="deleteDocumentFromFirebase('${doc.id}')" title="Admin Access">🗑️</div>
+                    <div class="doc-content">
                         <div class="doc-icon">${iconHtml}</div>
-                        <h4>${data.docType}</h4>
-                        <p>${data.fileName}</p>
+                        <div class="doc-info">
+                            <h4>${data.docType}</h4>
+                            <p class="file-name" title="${data.fileName}">${data.fileName}</p>
+                        </div>
                     </div>
-                    <div style="margin-top: 15px;">
-                        <button class="btn btn-small" style="width:100%; text-align:center; margin-bottom: 8px;" onclick="openModal('${data.url}', '${data.fileType}')">View Document</button>
-                        <button class="btn-delete" onclick="deleteDocumentFromFirebase('${doc.id}')">Delete File</button>
-                    </div>
+                    <button class="btn view-btn" onclick="openModal('${data.url}', '${data.fileType}')">View Document</button>
                 `;
                 docGrid.appendChild(card);
             });
@@ -610,7 +619,6 @@
             }
         }
 
-        // NEW: Intercept clicks to open the Add Report form
         function toggleReportForm() {
             const form = document.getElementById('report-form-container');
             const isCurrentlyHidden = (form.style.display === 'none' || form.style.display === '');
@@ -619,11 +627,10 @@
                 const pwd = prompt("Restricted Area. Enter admin password to create a new report:");
                 if (pwd !== "admin2026") {
                     alert("Access Denied: Incorrect password.");
-                    return; // Stop execution, don't show the form
+                    return;
                 }
                 form.style.display = 'block';
             } else {
-                // If it's already open, just close it (no password needed to cancel)
                 form.style.display = 'none';
             }
         }
