@@ -346,7 +346,7 @@ const firebaseConfig = {
             if (!file) { alert("Please choose a file first!"); return; }
 
             const password = prompt(`Enter password to upload ${docType}:`);
-            if (password !== "admin123") { alert("Incorrect password."); return; }
+            if (password !== "admin2026") { alert("Incorrect password."); return; }
 
             alert("Uploading... Please wait.");
     
@@ -357,7 +357,7 @@ const firebaseConfig = {
                 const snapshot = await storageRef.put(file);
                 const downloadURL = await snapshot.ref.getDownloadURL();
                 await db.collection("documents").add({
-                docType: docType, fileName: file.name, fileType: file.type, url: downloadURL, createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                    docType: docType, fileName: file.name, fileType: file.type, url: downloadURL, createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert("Upload successful!");
                 fileInput.value = "";
