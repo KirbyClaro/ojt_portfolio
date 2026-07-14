@@ -95,7 +95,27 @@
         .report-body { display: none; padding: 25px 20px; border-top: 1px solid #eee; background-color: #fff; animation: slideDown 0.3s ease-out; }
         .report-body.open { display: block; }
         .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 20px; }
-        .report-img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 6px; border: 1px solid #ddd; display: block; margin-bottom: 20px; }
+        
+        /* New Photo Gallery Grid & Hover Effects */
+        .report-gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
+        .report-img-thumbnail { 
+            width: 130px; 
+            height: 130px; 
+            object-fit: cover; 
+            border-radius: 6px; 
+            border: 1px solid #ddd; 
+            cursor: pointer; 
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s; 
+        }
+        .report-img-thumbnail:hover { 
+            transform: scale(1.4); 
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+            z-index: 10;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s; 
+        }
+
         .report-actions { text-align: right; border-top: 1px dashed #eee; padding-top: 15px; }
 
         @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
@@ -261,8 +281,9 @@
                     <label for="report-text">Tasks Accomplished & Key Learnings</label>
                     <textarea id="report-text" placeholder="Detail your daily tasks and insights..."></textarea>
                     
-                    <label for="report-image">Attach Photo/Documentation (Optional)</label>
-                    <input type="file" id="report-image" accept="image/*">
+                    <!-- Updated to accept multiple files -->
+                    <label for="report-image">Attach Photos/Documentation (Optional - You can select multiple images)</label>
+                    <input type="file" id="report-image" accept="image/*" multiple>
                     
                     <br>
                     <button class="btn" onclick="submitReportToFirebase()" id="submit-report-btn">Submit Weekly Report</button>
@@ -327,7 +348,7 @@
             });
         });
 
-        // Load Weekly Reports with Interactive Cards
+        // Load Weekly Reports with Interactive Cards & Image Gallery
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const historyContainer = document.getElementById('report-history-container');
             if (snapshot.empty) {
@@ -340,10 +361,18 @@
                 const reportCard = document.createElement('div');
                 reportCard.className = 'report-accordion';
                 
-                // Constructing the image HTML conditionally
-                let imageHtml = '';
-                if (data.imageUrl) {
-                    imageHtml = `<img src="${data.imageUrl}" alt="Report Image" class="report-img" onclick="openModal('${data.imageUrl}', 'image')">`;
+                // Constructing the image HTML gallery
+                let galleryHtml = '';
+                if (data.imageUrls && data.imageUrls.length > 0) {
+                    galleryHtml = `<div class="report-gallery">`;
+                    data.imageUrls.forEach(url => {
+                        galleryHtml += `<img src="${url}" alt="Report Image" class="report-img-thumbnail" onclick="openModal('${url}', 'image')">`;
+                    });
+                    galleryHtml += `</div>`;
+                } else if (data.imageUrl) { // Fallback for your older single uploads
+                    galleryHtml = `<div class="report-gallery">
+                                      <img src="${data.imageUrl}" alt="Report Image" class="report-img-thumbnail" onclick="openModal('${data.imageUrl}', 'image')">
+                                   </div>`;
                 }
 
                 reportCard.innerHTML = `
@@ -356,9 +385,9 @@
                     </div>
                     <div class="report-body">
                         <div class="report-body-text">${data.text}</div>
-                        ${imageHtml}
+                        ${galleryHtml}
                         <div class="report-actions">
-                            <button class="btn-delete" style="width: auto; padding: 6px 15px;" onclick="deleteReportFromFirebase('${doc.id}', '${data.imagePath || ''}')">Delete Log</button>
+                            <button class="btn-delete" style="width: auto; padding: 6px 15px;" onclick="deleteReportFromFirebase('${doc.id}')">Delete Log</button>
                         </div>
                     </div>
                 `;
@@ -397,13 +426,13 @@
             }
         }
 
-        // Submit Weekly Report with Optional Image
+        // Submit Weekly Report with Multiple Images Support
         async function submitReportToFirebase() {
             const title = document.getElementById('report-title').value;
             const date = document.getElementById('report-date').value;
             const text = document.getElementById('report-text').value;
             const imageInput = document.getElementById('report-image');
-            const file = imageInput.files[0];
+            const files = imageInput.files;
 
             if(!date || !text || !title) { alert("Please fill out the Title, Date, and Details fields."); return; }
             
@@ -413,15 +442,21 @@
             alert("Saving report... Please wait.");
 
             try {
-                let imageUrl = null;
-                let imagePath = null;
+                let imageUrls = [];
+                let imagePaths = [];
 
-                // Handle image upload if a file was selected
-                if (file) {
-                    imagePath = `ojt-report-images/${Date.now()}_${file.name}`;
-                    const imgRef = storage.ref(imagePath);
-                    const snapshot = await imgRef.put(file);
-                    imageUrl = await snapshot.ref.getDownloadURL();
+                // Handle multiple image uploads if files were selected
+                if (files.length > 0) {
+                    for (let i = 0; i < files.length; i++) {
+                        let file = files[i];
+                        let path = `ojt-report-images/${Date.now()}_${file.name}`;
+                        let imgRef = storage.ref(path);
+                        let snapshot = await imgRef.put(file);
+                        let url = await snapshot.ref.getDownloadURL();
+                        
+                        imageUrls.push(url);
+                        imagePaths.push(path);
+                    }
                 }
 
                 // Save to Firestore
@@ -429,8 +464,8 @@
                     title: title,
                     date: date, 
                     text: text, 
-                    imageUrl: imageUrl, // Will be null if no image was uploaded
-                    imagePath: imagePath,
+                    imageUrls: imageUrls, // Saves the array of image URLs
+                    imagePaths: imagePaths, // Saves the array of paths for deletion later
                     createdAt: firebase.firestore.FieldValue.serverTimestamp() 
                 });
                 
@@ -458,18 +493,32 @@
             }
         }
 
-        // Delete Report
-        async function deleteReportFromFirebase(docId, imagePath) {
+        // Delete Report (Upgraded to handle multiple images cleanly)
+        async function deleteReportFromFirebase(docId) {
             const password = prompt("Enter password to delete this report:");
             if (password === "admin2026") {
                 try { 
-                    // Delete the document from Firestore
-                    await db.collection("reports").doc(docId).delete(); 
+                    // First get the document to find the images
+                    const docRef = db.collection("reports").doc(docId);
+                    const doc = await docRef.get();
                     
-                    // Attempt to delete the associated image from Storage if it exists
-                    if (imagePath && imagePath !== 'undefined') {
-                        await storage.ref(imagePath).delete();
+                    if (doc.exists) {
+                        const data = doc.data();
+                        
+                        // Delete multiple images if they exist in the new format
+                        if (data.imagePaths && data.imagePaths.length > 0) {
+                            for(let path of data.imagePaths) {
+                                await storage.ref(path).delete().catch(e => console.log("Image not found", e));
+                            }
+                        } 
+                        // Fallback delete for the older single image format
+                        else if (data.imagePath) {
+                            await storage.ref(data.imagePath).delete().catch(e => console.log("Image not found", e));
+                        }
                     }
+                    
+                    // Delete the document text from Firestore
+                    await docRef.delete(); 
                     alert("Report deleted.");
                 } catch (error) { 
                     console.error("Error deleting report:", error);
