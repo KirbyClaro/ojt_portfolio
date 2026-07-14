@@ -38,10 +38,14 @@
         .wrapper { display: flex; min-height: calc(100vh - 95px); }
 
         /* Sidebar */
-        .sidebar { width: 260px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
+        .sidebar { width: 260px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+        .sidebar-menu { display: flex; flex-direction: column; }
         .sidebar button.tab-link { width: 100%; background: transparent; color: #ccc; border: none; padding: 18px 25px; text-align: left; font-size: 16px; font-family: 'Poppins', sans-serif; cursor: pointer; transition: all var(--transition-speed); border-left: 4px solid transparent; }
         .sidebar button.tab-link:hover { background-color: var(--sidebar-hover); color: white; }
         .sidebar button.tab-link.active { background-color: var(--sidebar-hover); color: white; border-left: 4px solid var(--pup-gold); font-weight: 600; }
+        
+        /* Admin specific sidebar button */
+        .admin-menu { margin-top: auto; margin-bottom: 20px; border-top: 1px solid #444; }
 
         /* Main Content */
         .main-content { flex: 1; padding: 40px; overflow-y: auto; }
@@ -153,11 +157,18 @@
 
     <div class="wrapper">
         <nav class="sidebar">
-            <button class="tab-link active" onclick="openTab('about')">About Me</button>
-            <button class="tab-link" onclick="openTab('company')">Company Profile</button>
-            <button class="tab-link" onclick="openTab('upload-reqs')">Upload Requirements</button>
-            <button class="tab-link" onclick="openTab('view-reqs')">View Documents</button>
-            <button class="tab-link" onclick="openTab('reports')">Weekly Reports</button>
+            <div class="sidebar-menu">
+                <!-- Main public links -->
+                <button class="tab-link active" onclick="openTab('about', this)">About Me</button>
+                <button class="tab-link" onclick="openTab('company', this)">Company Profile</button>
+                <button class="tab-link" onclick="openTab('view-reqs', this)">View Documents</button>
+                <button class="tab-link" onclick="openTab('reports', this)">Weekly Reports</button>
+            </div>
+            
+            <!-- Protected admin link separated at the bottom -->
+            <div class="admin-menu">
+                <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;">🔒 Upload Documents</button>
+            </div>
         </nav>
 
         <main class="main-content">
@@ -201,7 +212,6 @@
                         <li><strong>Core Capabilities:</strong> Features password-protected file uploading, secure document and log deletion controls, dynamic interactive galleries with hover-zoom capabilities, and real-time database syncing without requiring page reloads.</li>
                     </ul>
 
-                    <!-- NEW: Contact Information Section -->
                     <h3 style="margin-top: 35px;">Contact Information</h3>
                     <ul class="bullet-list" style="margin-bottom: 25px;">
                         <li><strong>Location:</strong> San Mateo, Rizal</li>
@@ -253,8 +263,8 @@
             </section>
 
             <section id="upload-reqs" class="content-section">
-                <h2 class="section-header">Upload OJT Requirements</h2>
-                <p style="margin-bottom: 20px;">Upload your official documents here.</p>
+                <h2 class="section-header">Upload OJT Requirements (Admin)</h2>
+                <p style="margin-bottom: 20px; color: #666;">Secured Portal. Upload your official documents here.</p>
                 
                 <div class="card">
                     <h3>Curriculum Vitae (CV)</h3>
@@ -581,13 +591,26 @@
             icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        function openTab(tabName) {
+        // NEW: Intercept clicks to restricted tabs
+        function openTab(tabName, btnElement) {
+            if (tabName === 'upload-reqs') {
+                const pwd = prompt("Restricted Area. Enter admin password to view this section:");
+                if (pwd !== "admin2026") {
+                    alert("Access Denied: Incorrect password.");
+                    return; // Stop execution, don't change tabs
+                }
+            }
+
             const contents = document.querySelectorAll(".content-section");
             contents.forEach(c => c.classList.remove("active"));
             const buttons = document.querySelectorAll(".tab-link");
             buttons.forEach(b => b.classList.remove("active"));
+            
             document.getElementById(tabName).classList.add("active");
-            event.currentTarget.classList.add("active");
+            
+            if (btnElement) {
+                btnElement.classList.add("active");
+            }
         }
 
         function openModal(fileUrl, fileType) {
