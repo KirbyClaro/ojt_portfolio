@@ -158,14 +158,12 @@
     <div class="wrapper">
         <nav class="sidebar">
             <div class="sidebar-menu">
-                <!-- Main public links -->
                 <button class="tab-link active" onclick="openTab('about', this)">About Me</button>
                 <button class="tab-link" onclick="openTab('company', this)">Company Profile</button>
                 <button class="tab-link" onclick="openTab('view-reqs', this)">View Documents</button>
                 <button class="tab-link" onclick="openTab('reports', this)">Weekly Reports</button>
             </div>
             
-            <!-- Protected admin link separated at the bottom -->
             <div class="admin-menu">
                 <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;">🔒 Upload Documents</button>
             </div>
@@ -532,7 +530,7 @@
                 document.getElementById('report-date').value = '';
                 document.getElementById('report-text').value = '';
                 document.getElementById('report-image').value = '';
-                toggleReportForm();
+                toggleReportForm(); // Form will hide normally without password prompt
                 alert("Weekly Report saved successfully!");
 
             } catch (error) { 
@@ -591,13 +589,12 @@
             icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
-        // NEW: Intercept clicks to restricted tabs
         function openTab(tabName, btnElement) {
             if (tabName === 'upload-reqs') {
                 const pwd = prompt("Restricted Area. Enter admin password to view this section:");
                 if (pwd !== "admin2026") {
                     alert("Access Denied: Incorrect password.");
-                    return; // Stop execution, don't change tabs
+                    return; 
                 }
             }
 
@@ -613,6 +610,24 @@
             }
         }
 
+        // NEW: Intercept clicks to open the Add Report form
+        function toggleReportForm() {
+            const form = document.getElementById('report-form-container');
+            const isCurrentlyHidden = (form.style.display === 'none' || form.style.display === '');
+            
+            if (isCurrentlyHidden) {
+                const pwd = prompt("Restricted Area. Enter admin password to create a new report:");
+                if (pwd !== "admin2026") {
+                    alert("Access Denied: Incorrect password.");
+                    return; // Stop execution, don't show the form
+                }
+                form.style.display = 'block';
+            } else {
+                // If it's already open, just close it (no password needed to cancel)
+                form.style.display = 'none';
+            }
+        }
+
         function openModal(fileUrl, fileType) {
             const modal = document.getElementById('document-modal');
             const viewer = document.getElementById('modal-viewer');
@@ -621,11 +636,6 @@
         }
 
         function closeModal() { document.getElementById('document-modal').style.display = 'none'; }
-        
-        function toggleReportForm() {
-            const form = document.getElementById('report-form-container');
-            form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-        }
 
         window.onclick = function(event) { if (event.target == document.getElementById('document-modal')) closeModal(); }
     </script>
