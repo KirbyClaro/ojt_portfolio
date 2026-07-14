@@ -57,7 +57,7 @@
         
         /* Forms & Buttons */
         label { display: block; font-weight: 600; margin-top: 15px; margin-bottom: 5px; font-size: 14px; }
-        input[type="file"], input[type="date"], textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: var(--border-radius); font-family: 'Poppins', sans-serif; font-size: 14px; background-color: #fafafa; }
+        input[type="text"], input[type="file"], input[type="date"], textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: var(--border-radius); font-family: 'Poppins', sans-serif; font-size: 14px; background-color: #fafafa; }
         textarea { resize: vertical; min-height: 120px; }
         .btn { background-color: var(--pup-maroon); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; transition: background-color var(--transition-speed); text-decoration: none; display: inline-block;}
         .btn:hover { background-color: #600000; }
@@ -81,6 +81,25 @@
         .doc-card p { font-size: 13px; color: #666; margin-bottom: 20px; word-break: break-all; }
         .doc-icon { font-size: 40px; margin-bottom: 15px; color: #bbb; text-align: center; }
 
+        /* Interactive Weekly Reports */
+        .report-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
+        .report-header-wrap .section-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        
+        .report-accordion { border: 1px solid #e0e0e0; border-radius: var(--border-radius); margin-bottom: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; }
+        .report-header { padding: 18px 20px; background-color: #fafafa; border-left: 4px solid var(--pup-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; user-select: none; }
+        .report-header:hover { background-color: #f0f0f0; }
+        .report-header h4 { margin: 0; color: var(--pup-maroon); font-size: 17px; }
+        .report-header .date { font-size: 13px; color: #555; display: block; margin-top: 4px; }
+        .toggle-icon { font-size: 18px; color: #888; transition: transform 0.3s; }
+        
+        .report-body { display: none; padding: 25px 20px; border-top: 1px solid #eee; background-color: #fff; animation: slideDown 0.3s ease-out; }
+        .report-body.open { display: block; }
+        .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 20px; }
+        .report-img { max-width: 100%; max-height: 400px; object-fit: contain; border-radius: 6px; border: 1px solid #ddd; display: block; margin-bottom: 20px; }
+        .report-actions { text-align: right; border-top: 1px dashed #eee; padding-top: 15px; }
+
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
         /* Modal */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
         .modal-content { background-color: #fff; border-radius: 8px; width: 80%; height: 85%; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; display: flex; flex-direction: column; }
@@ -97,11 +116,6 @@
         .bullet-list { list-style-type: none; margin-top: 10px; }
         .bullet-list li { margin-bottom: 10px; padding-left: 20px; position: relative; }
         .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 18px; top: -2px; }
-        
-        /* Reports Specific */
-        .report-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
-        .report-header-wrap .section-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .report-history-card { background: #fafafa; border-left: 4px solid #27ae60; padding: 15px; margin-bottom: 15px; border-radius: 4px; }
     </style>
 </head>
 <body>
@@ -234,15 +248,27 @@
                     <h2 class="section-header">Weekly Progress Reports</h2>
                     <button class="btn" style="margin-top: 0;" onclick="toggleReportForm()">+ Add Weekly Report</button>
                 </div>
+                
                 <div class="card" id="report-form-container" style="display: none; border-left: 4px solid var(--pup-gold);">
                     <h3>Create New Weekly Log</h3>
+                    
+                    <label for="report-title">Week Title</label>
+                    <input type="text" id="report-title" placeholder="e.g., Week 1: General Orientation">
+                    
                     <label for="report-date">Week Ending Date</label>
                     <input type="date" id="report-date">
+                    
                     <label for="report-text">Tasks Accomplished & Key Learnings</label>
-                    <textarea id="report-text" placeholder="Detail your daily tasks..."></textarea>
+                    <textarea id="report-text" placeholder="Detail your daily tasks and insights..."></textarea>
+                    
+                    <label for="report-image">Attach Photo/Documentation (Optional)</label>
+                    <input type="file" id="report-image" accept="image/*">
+                    
+                    <br>
                     <button class="btn" onclick="submitReportToFirebase()" id="submit-report-btn">Submit Weekly Report</button>
                     <button class="btn" style="background-color: #777; margin-left: 10px;" onclick="toggleReportForm()">Cancel</button>
                 </div>
+
                 <div id="report-history-container">
                     <div class="empty-state" id="empty-reports">
                         Loading your saved reports...
@@ -273,6 +299,7 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
+        // Load Documents
         db.collection("documents").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const docGrid = document.getElementById('doc-grid');
             if (snapshot.empty) {
@@ -300,6 +327,7 @@
             });
         });
 
+        // Load Weekly Reports with Interactive Cards
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const historyContainer = document.getElementById('report-history-container');
             if (snapshot.empty) {
@@ -310,15 +338,35 @@
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const reportCard = document.createElement('div');
-                reportCard.className = 'report-history-card';
+                reportCard.className = 'report-accordion';
+                
+                // Constructing the image HTML conditionally
+                let imageHtml = '';
+                if (data.imageUrl) {
+                    imageHtml = `<img src="${data.imageUrl}" alt="Report Image" class="report-img" onclick="openModal('${data.imageUrl}', 'image')">`;
+                }
+
                 reportCard.innerHTML = `
-                    <strong>Week Ending: ${data.date}</strong>
-                    <p style="margin-top: 10px; font-size: 14px;">${data.text}</p>
+                    <div class="report-header" onclick="toggleAccordion(this)">
+                        <div>
+                            <h4>${data.title || 'Weekly Report'}</h4>
+                            <span class="date">Week Ending: ${data.date}</span>
+                        </div>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="report-body">
+                        <div class="report-body-text">${data.text}</div>
+                        ${imageHtml}
+                        <div class="report-actions">
+                            <button class="btn-delete" style="width: auto; padding: 6px 15px;" onclick="deleteReportFromFirebase('${doc.id}', '${data.imagePath || ''}')">Delete Log</button>
+                        </div>
+                    </div>
                 `;
                 historyContainer.appendChild(reportCard);
             });
         });
 
+        // Trigger Document Upload
         async function triggerUpload(inputId, docType) {
             const fileInput = document.getElementById(inputId);
             const file = fileInput.files[0];
@@ -349,30 +397,95 @@
             }
         }
 
+        // Submit Weekly Report with Optional Image
         async function submitReportToFirebase() {
+            const title = document.getElementById('report-title').value;
             const date = document.getElementById('report-date').value;
             const text = document.getElementById('report-text').value;
-            if(!date || !text) { alert("Please fill all fields."); return; }
+            const imageInput = document.getElementById('report-image');
+            const file = imageInput.files[0];
+
+            if(!date || !text || !title) { alert("Please fill out the Title, Date, and Details fields."); return; }
             
-            const password = prompt("Enter password:");
+            const password = prompt("Enter password to submit report:");
             if (password !== "admin2026") { alert("Incorrect password."); return; }
 
+            alert("Saving report... Please wait.");
+
             try {
-                await db.collection("reports").add({ date, text, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+                let imageUrl = null;
+                let imagePath = null;
+
+                // Handle image upload if a file was selected
+                if (file) {
+                    imagePath = `ojt-report-images/${Date.now()}_${file.name}`;
+                    const imgRef = storage.ref(imagePath);
+                    const snapshot = await imgRef.put(file);
+                    imageUrl = await snapshot.ref.getDownloadURL();
+                }
+
+                // Save to Firestore
+                await db.collection("reports").add({ 
+                    title: title,
+                    date: date, 
+                    text: text, 
+                    imageUrl: imageUrl, // Will be null if no image was uploaded
+                    imagePath: imagePath,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp() 
+                });
+                
+                // Clear form
+                document.getElementById('report-title').value = '';
                 document.getElementById('report-date').value = '';
                 document.getElementById('report-text').value = '';
+                document.getElementById('report-image').value = '';
                 toggleReportForm();
-                alert("Report saved!");
-            } catch (error) { alert("Failed to save."); }
+                alert("Weekly Report saved successfully!");
+
+            } catch (error) { 
+                console.error(error);
+                alert("Failed to save report."); 
+            }
         }
 
+        // Delete Document
         async function deleteDocumentFromFirebase(docId) {
-            const password = prompt("Enter password to delete:");
+            const password = prompt("Enter password to delete document:");
             if (password === "admin2026") {
                 try { await db.collection("documents").doc(docId).delete(); } catch (error) { alert("Error deleting."); }
             } else if (password !== null) {
                 alert("Incorrect password.");
             }
+        }
+
+        // Delete Report
+        async function deleteReportFromFirebase(docId, imagePath) {
+            const password = prompt("Enter password to delete this report:");
+            if (password === "admin2026") {
+                try { 
+                    // Delete the document from Firestore
+                    await db.collection("reports").doc(docId).delete(); 
+                    
+                    // Attempt to delete the associated image from Storage if it exists
+                    if (imagePath && imagePath !== 'undefined') {
+                        await storage.ref(imagePath).delete();
+                    }
+                    alert("Report deleted.");
+                } catch (error) { 
+                    console.error("Error deleting report:", error);
+                    alert("Error deleting report."); 
+                }
+            } else if (password !== null) {
+                alert("Incorrect password.");
+            }
+        }
+
+        // Utility Functions
+        function toggleAccordion(element) {
+            const body = element.nextElementSibling;
+            const icon = element.querySelector('.toggle-icon');
+            body.classList.toggle('open');
+            icon.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
         }
 
         function openTab(tabName) {
