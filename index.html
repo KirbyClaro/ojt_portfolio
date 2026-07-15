@@ -30,9 +30,10 @@
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
         /* Header */
-        header { background-color: var(--pup-maroon); color: white; padding: 25px 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; z-index: 10; }
-        header h1 { font-size: 28px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; }
-        header p { font-size: 15px; font-weight: 300; opacity: 0.9; margin-top: 5px; padding-left: 19px; }
+        header { background-color: var(--pup-maroon); color: white; padding: 25px 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        .header-text h1 { font-size: 28px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; }
+        .header-text p { font-size: 15px; font-weight: 300; opacity: 0.9; margin-top: 5px; padding-left: 19px; }
+        .header-logo { height: 75px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); }
 
         /* Layout Grid */
         .wrapper { display: flex; min-height: calc(100vh - 95px); }
@@ -160,8 +161,11 @@
 <body>
 
     <header>
-        <h1>Kirby Christian C. Claro</h1>
-        <p>BS Computer Engineering | OJT Portfolio</p>
+        <div class="header-text">
+            <h1>Kirby Christian C. Claro</h1>
+            <p>BS Computer Engineering | OJT Portfolio</p>
+        </div>
+        <img src="images/puplogo.png" alt="PUP Logo" class="header-logo">
     </header>
 
     <div class="wrapper">
@@ -460,7 +464,7 @@
             });
         });
 
-        // Trigger Document Upload
+        // Trigger Document Upload (Updated to save filePath)
         async function triggerUpload(inputId, docType) {
             const fileInput = document.getElementById(inputId);
             const file = fileInput.files[0];
@@ -471,16 +475,19 @@
 
             alert("Uploading... Please wait.");
             
-            const storageRef = storage.ref(`ojt-documents/${Date.now()}_${file.name}`);
+            const filePath = `ojt-documents/${Date.now()}_${file.name}`;
+            const storageRef = storage.ref(filePath);
             
             try {
                 const snapshot = await storageRef.put(file);
                 const downloadURL = await snapshot.ref.getDownloadURL();
+                
                 await db.collection("documents").add({
                     docType: docType, 
                     fileName: file.name, 
                     fileType: file.type, 
                     url: downloadURL, 
+                    filePath: filePath,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
                 alert("Upload successful!");
@@ -510,7 +517,6 @@
                 let imageUrls = [];
                 let imagePaths = [];
 
-                // Handle multiple image uploads if files were selected
                 if (files.length > 0) {
                     for (let i = 0; i < files.length; i++) {
                         let file = files[i];
@@ -524,22 +530,20 @@
                     }
                 }
 
-                // Save to Firestore
                 await db.collection("reports").add({ 
                     title: title,
                     date: date, 
                     text: text, 
-                    imageUrls: imageUrls, // Saves the array of image URLs
-                    imagePaths: imagePaths, // Saves the array of paths for deletion later
+                    imageUrls: imageUrls, 
+                    imagePaths: imagePaths, 
                     createdAt: firebase.firestore.FieldValue.serverTimestamp() 
                 });
                 
-                // Clear form
                 document.getElementById('report-title').value = '';
                 document.getElementById('report-date').value = '';
                 document.getElementById('report-text').value = '';
                 document.getElementById('report-image').value = '';
-                toggleReportForm(); // Form will hide normally without password prompt
+                toggleReportForm();
                 alert("Weekly Report saved successfully!");
 
             } catch (error) { 
@@ -548,11 +552,28 @@
             }
         }
 
-        // Delete Document
+        // Delete Document (Updated to delete from Storage as well)
         async function deleteDocumentFromFirebase(docId) {
             const password = prompt("Enter password to delete document:");
             if (password === "admin2026") {
-                try { await db.collection("documents").doc(docId).delete(); } catch (error) { alert("Error deleting."); }
+                try { 
+                    const docRef = db.collection("documents").doc(docId);
+                    const doc = await docRef.get();
+                    
+                    if (doc.exists) {
+                        const data = doc.data();
+                        
+                        if (data.filePath) {
+                            await storage.ref(data.filePath).delete().catch(e => console.log("File not found in storage", e));
+                        }
+                    }
+                    
+                    await docRef.delete(); 
+                    alert("Document deleted securely from database and storage.");
+                } catch (error) { 
+                    console.error("Error deleting:", error);
+                    alert("Error deleting document."); 
+                }
             } else if (password !== null) {
                 alert("Incorrect password.");
             }
