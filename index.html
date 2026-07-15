@@ -149,7 +149,7 @@
         iframe { width: 100%; height: 100%; border: none; border-radius: 4px; }
         .modal-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
 
-        /* Company Profile */
+        /* Company Profile Additions */
         .company-header-flex { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
         .company-logo { width: 130px; height: auto; }
         .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: var(--border-radius); border: 1px solid #eee; }
@@ -248,28 +248,67 @@
                         <p style="font-size: 14px; margin-top: 10px; max-width: 600px;">The NTC is the primary government agency entrusted with the oversight, adjudication, and control of all telecommunications services, television, and radio networks throughout the Philippines.</p>
                     </div>
                 </div>
-                <div class="card">
-                    <h3>NTC NCR Office</h3>
-                    <img src="images/ntcbuilding.jpg" alt="NTC NCR Building" class="building-img">
+
+                <!-- NEW: Deployment Details Card -->
+                <div class="card" style="border-left: 4px solid var(--pup-maroon);">
+                    <h3 style="color: var(--pup-maroon);">Deployment Details: IT Unit</h3>
+                    <p style="margin-bottom: 15px;"><strong>Role:</strong> Computer Engineering Intern</p>
+                    <p style="margin-bottom: 15px; text-align: justify;">The IT Unit’s main daily function is to streamline institutional operations by maintaining critical hardware, managing database systems for licensing and requests, and developing custom software solutions to automate administrative workflows. We serve as the technical backbone of the agency, ensuring both the integrity of government records and the efficiency of daily office processes.</p>
+                    
+                    <h4 style="margin-bottom: 10px; color: #444; font-size: 15px;">Key Unit Personnel (Financial and Administrative Division):</h4>
+                    <ul class="bullet-list">
+                        <li><strong>Maria Angela S. Pingoy</strong> – Chief Administrative Officer, FAD</li>
+                        <li><strong>Nomeriano R. Obiña III</strong> – Engineer II / IT Supervisor</li>
+                        <li><strong>Atty. Therese Tiffanie V. Torres</strong> – Legal Officer</li>
+                    </ul>
                 </div>
+
+                <!-- NEW: Interactive Map & Location Card -->
+                <div class="card">
+                    <h3>NTC NCR Office & Location</h3>
+                    <p style="margin-bottom: 15px; color: #555; font-size: 14px;"><strong>Address:</strong> Sen. Miriam P. Defensor Santiago Ave. (formerly BIR road), East Triangle, Diliman, Quezon City 1101</p>
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <img src="images/ntcbuilding.jpg" alt="NTC NCR Building" class="building-img" style="flex: 1; min-width: 300px; height: 350px;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2798287342935!2d121.0422904!3d14.6400268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b70f6b3e8e7b%3A0x6b6c0e86b0a94371!2sNational%20Telecommunications%20Commission!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph" style="flex: 1; min-width: 300px; height: 350px; border:0; border-radius: var(--border-radius);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
                     <div class="card">
                         <h3>Our Vision</h3>
-                        <p>By 2025, the NTC is a world-class regulatory agency meeting the challenges of the digital world.</p>
+                        <p style="text-align: justify;">By 2025, the NTC is a world-class regulatory agency meeting the challenges of the digital world.</p>
                     </div>
                     <div class="card">
                         <h3>Our Mission</h3>
-                        <p>Maintain a responsive regulatory environment for an effective telecommunications/Information and Communications Technology (ICT) sector.</p>
+                        <p style="text-align: justify;">Maintain a responsive regulatory environment for an effective telecommunications/Information and Communications Technology (ICT) sector.</p>
                     </div>
                 </div>
+
+                <!-- UPDATED: Core Values & Mandate Card -->
                 <div class="card">
-                    <h3>Agency Mandate & Core Functions</h3>
-                    <ul class="bullet-list">
+                    <h3>Agency Mandate & Core Values</h3>
+                    <p style="margin-bottom: 15px; font-weight: 600;">Core Functions:</p>
+                    <ul class="bullet-list" style="margin-bottom: 25px;">
                         <li>Regulate the installation, operation, and maintenance of radio stations for both private and public use.</li>
                         <li>Regulate and supervise the provision of public telecommunications services.</li>
                         <li>Manage the national radio frequency spectrum.</li>
                         <li>Regulate and supervise radio and television broadcast stations, including cable (CATV) and pay television.</li>
                     </ul>
+
+                    <p style="margin-bottom: 15px; font-weight: 600;">Core Values:</p>
+                    <ul class="bullet-list">
+                        <li><strong>Regulation and Supervision:</strong> Ensuring that telecommunications services operate efficiently and fairly, adhering to national laws and policies.</li>
+                        <li><strong>Consumer Protection:</strong> Protecting consumers through fair competition and compliance with service standards.</li>
+                        <li><strong>Quality Service:</strong> Promoting quality service and ensuring that all telecommunications providers meet established standards.</li>
+                        <li><strong>Radio Spectrum Management:</strong> Efficiently managing the radio frequency spectrum to prevent interference and optimize bandwidth.</li>
+                        <li><strong>Adaptability:</strong> Adapting to new challenges in privacy, cybersecurity, and connectivity to ensure a secure and reliable telecommunications environment.</li>
+                    </ul>
+                </div>
+
+                <!-- NEW: Organizational Structure Card -->
+                <div class="card">
+                    <h3>Organizational Structure</h3>
+                    <img src="images/org_chart.jpg" alt="NTC NCR Organizational Chart" style="width: 100%; height: auto; border-radius: var(--border-radius); border: 1px solid #eee; margin-top: 15px;">
                 </div>
             </section>
 
