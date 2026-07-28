@@ -141,18 +141,46 @@
         .bg-git { background-color: #24292e; }
         .bg-gmail { background-color: #EA4335; }
 
+        /* Progress Bar & Filter Controls for View Documents */
+        .doc-dashboard-header { margin-bottom: 25px; }
+        .progress-card { background: #fff; padding: 20px 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 5px solid var(--pup-maroon); margin-bottom: 20px; }
+        .progress-title-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .progress-title-flex h4 { font-size: 16px; color: var(--pup-maroon); margin: 0; }
+        .progress-percentage { font-weight: 600; color: #555; font-size: 14px; }
+        .progress-bar-bg { width: 100%; height: 10px; background: #eee; border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); width: 0%; transition: width 0.6s cubic-bezier(0.165, 0.84, 0.44, 1); border-radius: 10px; }
+
+        .doc-controls-flex { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 25px; }
+        .doc-search-box { flex: 1; min-width: 240px; position: relative; }
+        .doc-search-box input { padding-left: 40px; margin: 0; background-color: #fff; border-radius: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .doc-search-icon { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); opacity: 0.5; font-size: 15px; }
+        
+        .doc-filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-pill { background: #fff; border: 1px solid #e0e0e0; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: #666; cursor: pointer; transition: all 0.2s; user-select: none; }
+        .filter-pill:hover { background: #f0f0f0; color: var(--pup-maroon); }
+        .filter-pill.active { background: var(--pup-maroon); color: #fff; border-color: var(--pup-maroon); box-shadow: 0 3px 10px rgba(128,0,0,0.2); }
+
         /* Modern Document Grid */
-        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; margin-top: 20px; }
-        .doc-card { background: white; border: none; padding: 30px 25px; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; }
+        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; }
+        .doc-card { background: white; border: none; padding: 25px; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; }
         .doc-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); }
         .doc-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-        .doc-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 20px; }
-        .doc-icon { font-size: 50px; margin-bottom: 15px; background: #fcf4f4; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--pup-maroon); transition: transform 0.3s; }
+        .doc-card-badge { position: absolute; top: 15px; left: 15px; font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-pdf { background: #fde8e8; color: #c0392b; }
+        .badge-img { background: #e3f2fd; color: #1976d2; }
+        
+        .doc-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 15px; margin-bottom: 20px; }
+        .doc-icon { font-size: 45px; margin-bottom: 12px; background: #fcf4f4; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--pup-maroon); transition: transform 0.3s; }
         .doc-card:hover .doc-icon { transform: scale(1.1); }
-        .doc-info h4 { color: var(--pup-maroon); font-size: 18px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
-        .file-name { font-size: 13px; color: #777; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .view-btn { width: 100%; background-color: var(--pup-maroon); border-radius: 8px; padding: 12px; font-size: 14px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .doc-info h4 { color: var(--pup-maroon); font-size: 17px; font-weight: 600; margin-bottom: 6px; line-height: 1.3; }
+        .file-name { font-size: 12px; color: #777; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; margin-bottom: 8px; }
+        .file-date { font-size: 11px; color: #aaa; }
+        
+        .doc-card-actions { display: flex; gap: 8px; width: 100%; margin-top: 10px; }
+        .view-btn { flex: 2; background-color: var(--pup-maroon); border-radius: 8px; padding: 10px; font-size: 13px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; text-align: center; }
         .view-btn:hover { background-color: #600000; }
+        .download-btn { flex: 1; background-color: #27ae60; border-radius: 8px; padding: 10px; font-size: 13px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; text-decoration: none; text-align: center; display: flex; align-items: center; justify-content: center; }
+        .download-btn:hover { background-color: #219653; }
         
         .delete-trigger { position: absolute; top: 15px; right: 15px; font-size: 18px; cursor: pointer; opacity: 0; transition: all 0.3s ease; color: #bbb; padding: 5px; }
         .doc-card:hover .delete-trigger { opacity: 0.4; }
@@ -168,14 +196,12 @@
         .report-accordion { position: relative; border: 1px solid #eee; border-radius: var(--border-radius); margin-bottom: 25px; background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03); overflow: hidden; transition: box-shadow 0.3s, transform 0.3s; }
         .report-accordion:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.06); transform: translateX(5px); }
         
-        /* Timeline glowing node */
         .timeline-node { position: absolute; left: -26px; top: 35px; width: 15px; height: 15px; border-radius: 50%; background: var(--pup-gold); border: 3px solid #fff; box-shadow: 0 0 0 3px rgba(241,196,15,0.3); z-index: 2; transition: transform 0.3s; }
         .report-accordion:hover .timeline-node { transform: scale(1.2); background: var(--pup-maroon); box-shadow: 0 0 0 3px rgba(128,0,0,0.2); }
 
         .report-header { padding: 22px 25px; background-color: #ffffff; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; user-select: none; }
         .report-header:hover { background-color: #fafafa; }
         
-        /* Week Badge */
         .week-badge { display: inline-block; background: #fdf5f5; color: var(--pup-maroon); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; letter-spacing: 0.5px; text-transform: uppercase; border: 1px solid #f9e8e8; }
         
         .report-header h4 { margin: 0 0 8px 0; color: var(--text-main); font-size: 17px; font-weight: 600; line-height: 1.4; }
@@ -237,6 +263,7 @@
             .doc-grid { grid-template-columns: 1fr; }
             .report-accordion { margin-left: 15px; }
             .timeline-node { left: -36px; }
+            .doc-controls-flex { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -452,6 +479,32 @@
 
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
+                
+                <!-- NEW: Progress Bar & Controls Dashboard -->
+                <div class="doc-dashboard-header">
+                    <div class="progress-card">
+                        <div class="progress-title-flex">
+                            <h4>📋 OJT Documentation Checklist Progress</h4>
+                            <span class="progress-percentage" id="doc-progress-text">0 of 9 Completed (0%)</span>
+                        </div>
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" id="doc-progress-fill"></div>
+                        </div>
+                    </div>
+
+                    <div class="doc-controls-flex">
+                        <div class="doc-search-box">
+                            <span class="doc-search-icon">🔍</span>
+                            <input type="text" id="doc-search-input" placeholder="Search documents..." onkeyup="filterDocuments()">
+                        </div>
+                        <div class="doc-filter-pills">
+                            <span class="filter-pill active" onclick="setDocFilter('all', this)">All Documents</span>
+                            <span class="filter-pill" onclick="setDocFilter('pdf', this)">📕 PDFs</span>
+                            <span class="filter-pill" onclick="setDocFilter('image', this)">🖼️ Images</span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="doc-grid" id="doc-grid">
                     <div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">
                         Loading your saved documents...
@@ -521,6 +574,9 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
+        let allDocuments = []; // Global cache for search/filter
+        let activeDocFilter = 'all';
+
         // Modern Toast Notification Function
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
@@ -531,7 +587,7 @@
             
             setTimeout(() => {
                 toast.classList.add('fadeOut');
-                setTimeout(() => toast.remove(), 400); // Remove after fade out
+                setTimeout(() => toast.remove(), 400);
             }, 3000);
         }
 
@@ -543,33 +599,90 @@
             backdrop.classList.toggle('open');
         }
 
-        // Load Documents
+        // Load Documents with Interactive Progress & Filtering
         db.collection("documents").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
+            allDocuments = [];
+            snapshot.forEach((doc) => {
+                allDocuments.push({ id: doc.id, ...doc.data() });
+            });
+
+            updateDocProgressBar();
+            renderDocuments();
+        });
+
+        function updateDocProgressBar() {
+            const totalRequired = 9;
+            const uniqueTypes = new Set(allDocuments.map(d => d.docType));
+            const count = uniqueTypes.size;
+            const percentage = Math.min(Math.round((count / totalRequired) * 100), 100);
+
+            document.getElementById('doc-progress-text').innerText = `${count} of ${totalRequired} Completed (${percentage}%)`;
+            document.getElementById('doc-progress-fill').style.width = `${percentage}%`;
+        }
+
+        function setDocFilter(filterType, pillElement) {
+            activeDocFilter = filterType;
+            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+            if(pillElement) pillElement.classList.add('active');
+            renderDocuments();
+        }
+
+        function filterDocuments() {
+            renderDocuments();
+        }
+
+        function renderDocuments() {
             const docGrid = document.getElementById('doc-grid');
-            if (snapshot.empty) {
-                docGrid.innerHTML = `<div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">No documents uploaded yet. Admin can add files via the Secure Portal.</div>`;
+            const searchQuery = document.getElementById('doc-search-input').value.toLowerCase();
+
+            let filtered = allDocuments.filter(doc => {
+                const matchesSearch = doc.docType.toLowerCase().includes(searchQuery) || doc.fileName.toLowerCase().includes(searchQuery);
+                const isPdf = doc.fileType.includes('pdf');
+                
+                if (activeDocFilter === 'pdf') return matchesSearch && isPdf;
+                if (activeDocFilter === 'image') return matchesSearch && !isPdf;
+                return matchesSearch;
+            });
+
+            if (filtered.length === 0) {
+                docGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No documents found matching your criteria.</div>`;
                 return;
             }
+
             docGrid.innerHTML = "";
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                let iconHtml = data.fileType.includes('pdf') ? '📕' : '🖼️';
+            filtered.forEach((data) => {
+                const isPdf = data.fileType.includes('pdf');
+                const badgeClass = isPdf ? 'badge-pdf' : 'badge-img';
+                const badgeLabel = isPdf ? 'PDF' : 'IMAGE';
+                const iconHtml = isPdf ? '📕' : '🖼️';
+                
+                // Formatted Date
+                let formattedDate = "Uploaded Recently";
+                if (data.createdAt && data.createdAt.toDate) {
+                    formattedDate = "Uploaded: " + data.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                }
+
                 const card = document.createElement('div');
                 card.className = 'doc-card';
                 card.innerHTML = `
-                    <div class="delete-trigger" onclick="deleteDocumentFromFirebase('${doc.id}')" title="Admin Access">🗑️</div>
+                    <span class="doc-card-badge ${badgeClass}">${badgeLabel}</span>
+                    <div class="delete-trigger" onclick="deleteDocumentFromFirebase('${data.id}')" title="Admin Access">🗑️</div>
                     <div class="doc-content">
                         <div class="doc-icon">${iconHtml}</div>
                         <div class="doc-info">
                             <h4>${data.docType}</h4>
                             <p class="file-name" title="${data.fileName}">${data.fileName}</p>
+                            <span class="file-date">${formattedDate}</span>
                         </div>
                     </div>
-                    <button class="btn view-btn" onclick="openModal('${data.url}', '${data.fileType}')">View Document</button>
+                    <div class="doc-card-actions">
+                        <button class="btn view-btn" onclick="openModal('${data.url}', '${data.fileType}')">👁️ View</button>
+                        <a href="${data.url}" target="_blank" download class="download-btn" title="Direct Download">⬇️</a>
+                    </div>
                 `;
                 docGrid.appendChild(card);
             });
-        });
+        }
 
         // Load Weekly Reports with Timeline UI
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
@@ -584,7 +697,6 @@
                 const reportCard = document.createElement('div');
                 reportCard.className = 'report-accordion card'; 
                 
-                // Image Gallery Logic
                 let galleryHtml = '';
                 if (data.imageUrls && data.imageUrls.length > 0) {
                     galleryHtml = `<div class="report-gallery">`;
@@ -598,7 +710,6 @@
                                    </div>`;
                 }
 
-                // Smart Title Splitter
                 let fullTitle = data.title || 'Weekly Report';
                 let badgeText = 'OJT Log';
                 let mainTitle = fullTitle;
@@ -804,7 +915,6 @@
                 btnElement.classList.add("active");
             }
 
-            // If on mobile, close the sidebar after clicking a tab
             if (window.innerWidth <= 900) {
                 toggleSidebar();
             }
