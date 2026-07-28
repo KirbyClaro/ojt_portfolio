@@ -113,7 +113,7 @@
         .card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         .card h3 { font-size: 19px; margin-bottom: 15px; color: var(--text-main); }
 
-        /* --- NEW: Interactive About Me Enhancements --- */
+        /* --- Interactive About Me Enhancements --- */
         .profile-header-flex { display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 10px; }
         .profile-img-container { text-align: center; }
         .profile-img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 4px solid var(--pup-maroon); box-shadow: 0 8px 25px rgba(128,0,0,0.2); flex-shrink: 0; transition: transform var(--transition-speed), border-color var(--transition-speed); }
@@ -138,15 +138,19 @@
         .project-links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: white; background: #24292e; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 600; transition: background 0.2s; }
         .project-links a:hover { background: #000; }
 
-        /* Animated Skills Bars */
+        /* Animated Skills Bars - FIXED BUG */
         .skills-container { padding: 30px; }
         .skill-row { margin-bottom: 18px; }
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #444; }
         .skill-bar-bg { width: 100%; height: 8px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
         .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); border-radius: 10px; width: 0; }
+        /* Using the CSS variable --target-width to ensure the animation knows exactly where to stop */
         .content-section.active .skill-bar-fill { animation: fillBar 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; animation-delay: 0.3s; }
         
-        @keyframes fillBar { from { width: 0; } }
+        @keyframes fillBar { 
+            0% { width: 0; } 
+            100% { width: var(--target-width); } 
+        }
 
         /* Action Contact Card */
         .action-card { background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%); border: none; color: white; padding: 35px; border-radius: 16px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; align-items: center; gap: 20px; }
@@ -360,7 +364,6 @@
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
                 
-                <!-- NEW: Upgraded Profile Header with Quick Facts -->
                 <div class="card">
                     <div class="profile-header-flex">
                         <div class="profile-img-container">
@@ -377,7 +380,6 @@
                     </div>
                 </div>
                 
-                <!-- NEW: Interactive CSS Grid Project Cards -->
                 <h3 style="margin: 35px 0 15px; color: var(--pup-maroon); font-size: 22px;">Key Academic & Technical Projects</h3>
                 <div class="project-grid">
                     <div class="project-card">
@@ -385,7 +387,8 @@
                         <h4>Employee DTR App</h4>
                         <p>A modern, production-ready desktop application built with Python, PySide6, and SQLAlchemy featuring secure, automated timekeeping.</p>
                         <div class="project-links">
-                            <a href="https://github.com/KirbyClaro" target="_blank">💻 View on GitHub</a>
+                            <!-- UPDATED LINK -->
+                            <a href="https://github.com/KirbyClaro/employee_daily_time_record_app" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
                     
@@ -394,7 +397,8 @@
                         <h4>OS Algorithms</h4>
                         <p>A technical collection of core Operating System implementations in Python, covering CPU scheduling, memory management, and paging.</p>
                         <div class="project-links">
-                            <a href="https://github.com/KirbyClaro" target="_blank">💻 View on GitHub</a>
+                            <!-- UPDATED LINK -->
+                            <a href="https://github.com/KirbyClaro/operating_system_algorithms" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
                     
@@ -403,37 +407,37 @@
                         <h4>Request System</h4>
                         <p>A specialized web-based management tool developed to securely streamline and automate operational administrative workflows.</p>
                         <div class="project-links">
-                            <a href="https://github.com/KirbyClaro" target="_blank">💻 View on GitHub</a>
+                            <!-- UPDATED LINK -->
+                            <a href="https://github.com/KirbyClaro/request_system" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
                 </div>
 
-                <!-- NEW: Animated Tech Stack Progress Bars -->
                 <h3 style="margin: 35px 0 15px; color: var(--pup-maroon); font-size: 22px;">Technical Proficiency</h3>
                 <div class="card skills-container">
                     <div class="skill-row">
                         <div class="skill-info"><span>HTML5 & CSS3</span><span>90%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 90%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 90%;"></div></div>
                     </div>
                     <div class="skill-row">
                         <div class="skill-info"><span>Python</span><span>85%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 85%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 85%;"></div></div>
                     </div>
                     <div class="skill-row">
                         <div class="skill-info"><span>C++</span><span>80%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 80%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 80%;"></div></div>
                     </div>
                     <div class="skill-row">
                         <div class="skill-info"><span>JavaScript</span><span>75%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 75%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 75%;"></div></div>
                     </div>
                     <div class="skill-row">
                         <div class="skill-info"><span>Google Firebase</span><span>75%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 75%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 75%;"></div></div>
                     </div>
                     <div class="skill-row" style="margin-bottom: 0;">
                         <div class="skill-info"><span>Java</span><span>70%</span></div>
-                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="max-width: 70%;"></div></div>
+                        <div class="skill-bar-bg"><div class="skill-bar-fill" style="--target-width: 70%;"></div></div>
                     </div>
                 </div>
 
@@ -450,7 +454,6 @@
                     </ul>
                 </div>
 
-                <!-- NEW: Floating Action Contact Card -->
                 <div class="action-card" style="margin-top: 35px;">
                     <h3>Let's Connect</h3>
                     <p>San Mateo, Rizal | Available for professional opportunities and collaborations.</p>
