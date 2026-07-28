@@ -21,25 +21,40 @@
             --bg-color: #f8f9fa;
             --text-main: #333333;
             --card-bg: #ffffff;
-            --border-radius: 12px; /* Smoother, modern corners */
+            --border-radius: 12px; 
             --transition-speed: 0.3s;
         }
 
         /* Global */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
 
-        /* Header (Added gradient for depth) */
-        header { background: linear-gradient(135deg, var(--pup-maroon) 0%, #4a0000 100%); color: white; padding: 25px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
-        .header-text h1 { font-size: 28px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .header-text p { font-size: 15px; font-weight: 300; opacity: 0.9; margin-top: 5px; padding-left: 19px; }
-        .header-logo { height: 75px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-color); }
+        ::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #aaa; }
+        
+        .sidebar::-webkit-scrollbar { width: 6px; }
+        .sidebar::-webkit-scrollbar-track { background: var(--sidebar-bg); }
+        .sidebar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .sidebar::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        /* Header */
+        header { background: linear-gradient(135deg, var(--pup-maroon) 0%, #4a0000 100%); color: white; padding: 20px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; z-index: 20; display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .menu-toggle { font-size: 28px; cursor: pointer; display: none; transition: color 0.2s; }
+        .menu-toggle:hover { color: var(--pup-gold); }
+        .header-text h1 { font-size: 26px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .header-text p { font-size: 14px; font-weight: 300; opacity: 0.9; margin-top: 3px; padding-left: 19px; }
+        .header-logo { height: 65px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
 
         /* Layout Grid */
-        .wrapper { display: flex; min-height: calc(100vh - 95px); }
+        .wrapper { display: flex; min-height: calc(100vh - 105px); position: relative; }
 
         /* Sleek Sidebar Navigation */
-        .sidebar { width: 270px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 4px 0 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; z-index: 5; }
+        .sidebar-backdrop { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 14; opacity: 0; transition: opacity 0.3s; }
+        .sidebar { width: 270px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 4px 0 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; z-index: 15; overflow-y: auto; transition: transform 0.3s ease; }
         .sidebar-menu { display: flex; flex-direction: column; gap: 8px; padding-right: 20px; }
         
         .sidebar button.tab-link { 
@@ -54,18 +69,14 @@
             cursor: pointer; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
             border-left: 4px solid transparent; 
-            border-radius: 0 30px 30px 0; /* Pill shape on right */
+            border-radius: 0 30px 30px 0; 
             display: flex;
             align-items: center;
         }
         
         .tab-icon { font-size: 18px; margin-right: 12px; width: 22px; text-align: center; opacity: 0.6; transition: all var(--transition-speed); }
         
-        .sidebar button.tab-link:hover { 
-            background-color: var(--sidebar-hover); 
-            color: #ffffff; 
-            transform: translateX(8px); 
-        }
+        .sidebar button.tab-link:hover { background-color: var(--sidebar-hover); color: #ffffff; transform: translateX(8px); }
         .sidebar button.tab-link:hover .tab-icon { opacity: 1; transform: scale(1.1); }
 
         /* Active Tab State */
@@ -76,20 +87,25 @@
             font-weight: 600; 
             transform: translateX(8px); 
         }
-        .sidebar button.tab-link.active .tab-icon { 
-            opacity: 1; 
-            color: var(--pup-gold); 
-            filter: drop-shadow(0 0 5px rgba(241,196,15,0.4)); 
-        }
+        .sidebar button.tab-link.active .tab-icon { opacity: 1; color: var(--pup-gold); filter: drop-shadow(0 0 5px rgba(241,196,15,0.4)); }
         
-        /* Admin specific sidebar button */
         .admin-menu { margin-top: auto; margin-bottom: 25px; border-top: 1px solid #333; padding-top: 20px; padding-right: 20px; }
 
         /* Main Content */
-        .main-content { flex: 1; padding: 45px; overflow-y: auto; }
-        .content-section { display: none; animation: fadeIn 0.4s ease-out; }
+        .main-content { flex: 1; padding: 45px; overflow-y: auto; display: flex; flex-direction: column; }
+        .content-section { display: none; flex: 1; }
         .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Staggered Load Animations */
+        .content-section.active .card { opacity: 0; animation: slideUpFade 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; }
+        .content-section.active .card:nth-child(1) { animation-delay: 0.05s; }
+        .content-section.active .card:nth-child(2) { animation-delay: 0.12s; }
+        .content-section.active .card:nth-child(3) { animation-delay: 0.19s; }
+        .content-section.active .card:nth-child(4) { animation-delay: 0.26s; }
+        .content-section.active .card:nth-child(5) { animation-delay: 0.33s; }
+        .content-section.active .card:nth-child(n+6) { animation-delay: 0.40s; }
+        
+        @keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Modern Cards */
         .section-header { color: var(--pup-maroon); font-size: 26px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 12px; }
@@ -138,7 +154,6 @@
         .view-btn { width: 100%; background-color: var(--pup-maroon); border-radius: 8px; padding: 12px; font-size: 14px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
         .view-btn:hover { background-color: #600000; }
         
-        /* Hidden Delete Trigger */
         .delete-trigger { position: absolute; top: 15px; right: 15px; font-size: 18px; cursor: pointer; opacity: 0; transition: all 0.3s ease; color: #bbb; padding: 5px; }
         .doc-card:hover .delete-trigger { opacity: 0.4; }
         .delete-trigger:hover { opacity: 1 !important; color: #e74c3c; transform: scale(1.1); }
@@ -159,24 +174,9 @@
         .report-body.open { display: block; }
         .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 25px; text-align: justify; }
         
-        /* Photo Gallery Grid & Hover Effects */
         .report-gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
-        .report-img-thumbnail { 
-            width: 140px; 
-            height: 140px; 
-            object-fit: cover; 
-            border-radius: 8px; 
-            border: 1px solid #ddd; 
-            cursor: pointer; 
-            position: relative;
-            z-index: 1;
-            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, z-index 0s; 
-        }
-        .report-img-thumbnail:hover { 
-            transform: scale(1.5) translateY(-5px); 
-            box-shadow: 0 15px 30px rgba(0,0,0,0.4); 
-            z-index: 10;
-        }
+        .report-img-thumbnail { width: 140px; height: 140px; object-fit: cover; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; position: relative; z-index: 1; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, z-index 0s; }
+        .report-img-thumbnail:hover { transform: scale(1.5) translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.4); z-index: 10; }
 
         .report-actions { text-align: right; border-top: 1px dashed #eee; padding-top: 15px; }
 
@@ -198,20 +198,52 @@
         .bullet-list { list-style-type: none; margin-top: 10px; }
         .bullet-list li { margin-bottom: 12px; padding-left: 22px; position: relative; text-align: justify; font-size: 14.5px; }
         .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 20px; top: -3px; }
+
+        /* Toast Notifications */
+        #toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
+        .toast { padding: 15px 25px; border-radius: 8px; color: white; font-weight: 600; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 10px; min-width: 250px; }
+        .toast.success { background-color: #2ecc71; }
+        .toast.error { background-color: #e74c3c; }
+        .toast.fadeOut { opacity: 0; transform: translateX(100%); transition: all 0.4s ease; }
+        @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Footer */
+        footer { margin-top: auto; padding: 25px 0 10px 0; text-align: center; border-top: 1px solid #eaeaea; color: #888; font-size: 13px; }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 900px) {
+            header { padding: 15px 20px; }
+            .menu-toggle { display: block; }
+            .header-text h1 { font-size: 20px; }
+            .header-text p { font-size: 12px; }
+            .header-logo { height: 45px; }
+            .sidebar { position: fixed; top: 0; left: 0; height: 100%; transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .sidebar-backdrop.open { display: block; opacity: 1; }
+            .main-content { padding: 20px; }
+            .doc-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
+    <!-- Toast Notification Container -->
+    <div id="toast-container"></div>
+
     <header>
-        <div class="header-text">
-            <h1>Kirby Christian C. Claro</h1>
-            <p>BS Computer Engineering | OJT Portfolio</p>
+        <div class="header-left">
+            <div class="menu-toggle" onclick="toggleSidebar()">☰</div>
+            <div class="header-text">
+                <h1>Kirby Christian C. Claro</h1>
+                <p>BS Computer Engineering | OJT Portfolio</p>
+            </div>
         </div>
         <img src="images/puplogo.png" alt="PUP Logo" class="header-logo">
     </header>
 
     <div class="wrapper">
-        <nav class="sidebar">
+        <div class="sidebar-backdrop" onclick="toggleSidebar()"></div>
+        <nav class="sidebar" id="sidebar">
             <div class="sidebar-menu">
                 <button class="tab-link active" onclick="openTab('about', this)"><span class="tab-icon">👨‍💻</span> About Me</button>
                 <button class="tab-link" onclick="openTab('company', this)"><span class="tab-icon">🏢</span> Company Profile</button>
@@ -220,7 +252,7 @@
             </div>
             
             <div class="admin-menu">
-                <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;"><span class="tab-icon">🔒</span> Upload</button>
+                <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;"><span class="tab-icon">🔒</span> Upload Settings</button>
             </div>
         </nav>
 
@@ -444,6 +476,12 @@
                     </div>
                 </div>
             </section>
+
+            <!-- Professional Footer -->
+            <footer>
+                <p>&copy; 2026 Kirby Christian C. Claro | Polytechnic University of the Philippines - BS Computer Engineering</p>
+            </footer>
+
         </main>
     </div>
 
@@ -467,6 +505,28 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const storage = firebase.storage();
+
+        // Modern Toast Notification Function
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = type === 'success' ? `✅ ${message}` : `⚠️ ${message}`;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('fadeOut');
+                setTimeout(() => toast.remove(), 400); // Remove after fade out
+            }, 3000);
+        }
+
+        // Mobile Sidebar Toggle
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.querySelector('.sidebar-backdrop');
+            sidebar.classList.toggle('open');
+            backdrop.classList.toggle('open');
+        }
 
         // Load Documents
         db.collection("documents").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
@@ -496,7 +556,7 @@
             });
         });
 
-        // Load Weekly Reports with Interactive Cards & Image Gallery
+        // Load Weekly Reports
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const historyContainer = document.getElementById('report-history-container');
             if (snapshot.empty) {
@@ -507,7 +567,7 @@
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 const reportCard = document.createElement('div');
-                reportCard.className = 'report-accordion';
+                reportCard.className = 'report-accordion card'; // Added card class for stagger animation
                 
                 let galleryHtml = '';
                 if (data.imageUrls && data.imageUrls.length > 0) {
@@ -546,12 +606,12 @@
         async function triggerUpload(inputId, docType) {
             const fileInput = document.getElementById(inputId);
             const file = fileInput.files[0];
-            if (!file) { alert("Please choose a file first!"); return; }
+            if (!file) { showToast("Please choose a file first!", "error"); return; }
 
             const password = prompt(`Enter admin password to upload ${docType}:`);
-            if (password !== "admin2026") { alert("Access Denied: Incorrect password."); return; }
+            if (password !== "admin2026") { showToast("Access Denied: Incorrect password.", "error"); return; }
 
-            alert("Uploading... Please wait.");
+            showToast("Uploading... Please wait.", "success");
             
             const filePath = `ojt-documents/${Date.now()}_${file.name}`;
             const storageRef = storage.ref(filePath);
@@ -568,11 +628,11 @@
                     filePath: filePath,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp()
                 });
-                alert("Upload successful!");
+                showToast("Upload successful!", "success");
                 fileInput.value = "";
             } catch (error) { 
                 console.error("Upload error details:", error);
-                alert("Failed to upload."); 
+                showToast("Failed to upload.", "error"); 
             }
         }
 
@@ -584,12 +644,12 @@
             const imageInput = document.getElementById('report-image');
             const files = imageInput.files;
 
-            if(!date || !text || !title) { alert("Please fill out the Title, Date, and Details fields."); return; }
+            if(!date || !text || !title) { showToast("Please fill out all fields.", "error"); return; }
             
             const password = prompt("Enter admin password to submit report:");
-            if (password !== "admin2026") { alert("Access Denied: Incorrect password."); return; }
+            if (password !== "admin2026") { showToast("Access Denied: Incorrect password.", "error"); return; }
 
-            alert("Saving report... Please wait.");
+            showToast("Saving report... Please wait.", "success");
 
             try {
                 let imageUrls = [];
@@ -622,11 +682,11 @@
                 document.getElementById('report-text').value = '';
                 document.getElementById('report-image').value = '';
                 toggleReportForm();
-                alert("Weekly Report saved successfully!");
+                showToast("Weekly Report saved successfully!", "success");
 
             } catch (error) { 
                 console.error(error);
-                alert("Failed to save report."); 
+                showToast("Failed to save report.", "error"); 
             }
         }
 
@@ -646,13 +706,13 @@
                     }
                     
                     await docRef.delete(); 
-                    alert("Document deleted securely.");
+                    showToast("Document deleted securely.", "success");
                 } catch (error) { 
                     console.error("Error deleting:", error);
-                    alert("Error deleting document."); 
+                    showToast("Error deleting document.", "error"); 
                 }
             } else if (password !== null) {
-                alert("Access Denied: Incorrect password.");
+                showToast("Access Denied: Incorrect password.", "error");
             }
         }
 
@@ -677,13 +737,13 @@
                     }
                     
                     await docRef.delete(); 
-                    alert("Report deleted.");
+                    showToast("Report deleted.", "success");
                 } catch (error) { 
                     console.error("Error deleting report:", error);
-                    alert("Error deleting report."); 
+                    showToast("Error deleting report.", "error"); 
                 }
             } else if (password !== null) {
-                alert("Access Denied: Incorrect password.");
+                showToast("Access Denied: Incorrect password.", "error");
             }
         }
 
@@ -699,7 +759,7 @@
             if (tabName === 'upload-reqs') {
                 const pwd = prompt("Restricted Area. Enter admin password to view this section:");
                 if (pwd !== "admin2026") {
-                    alert("Access Denied: Incorrect password.");
+                    showToast("Access Denied: Incorrect password.", "error");
                     return; 
                 }
             }
@@ -714,6 +774,11 @@
             if (btnElement) {
                 btnElement.classList.add("active");
             }
+
+            // If on mobile, close the sidebar after clicking a tab
+            if (window.innerWidth <= 900) {
+                toggleSidebar();
+            }
         }
 
         function toggleReportForm() {
@@ -723,7 +788,7 @@
             if (isCurrentlyHidden) {
                 const pwd = prompt("Restricted Area. Enter admin password to create a new report:");
                 if (pwd !== "admin2026") {
-                    alert("Access Denied: Incorrect password.");
+                    showToast("Access Denied: Incorrect password.", "error");
                     return;
                 }
                 form.style.display = 'block';
