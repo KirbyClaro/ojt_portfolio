@@ -16,12 +16,12 @@
         :root {
             --pup-maroon: #800000;
             --pup-gold: #f1c40f;
-            --sidebar-bg: #222222;
-            --sidebar-hover: #333333;
-            --bg-color: #f4f7f6;
+            --sidebar-bg: #1a1a1a;
+            --sidebar-hover: #2a2a2a;
+            --bg-color: #f8f9fa;
             --text-main: #333333;
             --card-bg: #ffffff;
-            --border-radius: 8px;
+            --border-radius: 12px; /* Smoother, modern corners */
             --transition-speed: 0.3s;
         }
 
@@ -29,111 +29,153 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; }
 
-        /* Header */
-        header { background-color: var(--pup-maroon); color: white; padding: 25px 40px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
-        .header-text h1 { font-size: 28px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; }
+        /* Header (Added gradient for depth) */
+        header { background: linear-gradient(135deg, var(--pup-maroon) 0%, #4a0000 100%); color: white; padding: 25px 40px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); position: relative; z-index: 10; display: flex; justify-content: space-between; align-items: center; }
+        .header-text h1 { font-size: 28px; font-weight: 600; border-left: 4px solid var(--pup-gold); padding-left: 15px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .header-text p { font-size: 15px; font-weight: 300; opacity: 0.9; margin-top: 5px; padding-left: 19px; }
-        .header-logo { height: 75px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); }
+        .header-logo { height: 75px; width: auto; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); }
 
         /* Layout Grid */
         .wrapper { display: flex; min-height: calc(100vh - 95px); }
 
-        /* Sidebar */
-        .sidebar { width: 260px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
-        .sidebar-menu { display: flex; flex-direction: column; }
-        .sidebar button.tab-link { width: 100%; background: transparent; color: #ccc; border: none; padding: 18px 25px; text-align: left; font-size: 16px; font-family: 'Poppins', sans-serif; cursor: pointer; transition: all var(--transition-speed); border-left: 4px solid transparent; }
-        .sidebar button.tab-link:hover { background-color: var(--sidebar-hover); color: white; }
-        .sidebar button.tab-link.active { background-color: var(--sidebar-hover); color: white; border-left: 4px solid var(--pup-gold); font-weight: 600; }
+        /* Sleek Sidebar Navigation */
+        .sidebar { width: 270px; background-color: var(--sidebar-bg); padding-top: 30px; box-shadow: 4px 0 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; z-index: 5; }
+        .sidebar-menu { display: flex; flex-direction: column; gap: 8px; padding-right: 20px; }
+        
+        .sidebar button.tab-link { 
+            width: 100%; 
+            background: transparent; 
+            color: #a0a0a0; 
+            border: none; 
+            padding: 16px 20px 16px 25px; 
+            text-align: left; 
+            font-size: 15px; 
+            font-family: 'Poppins', sans-serif; 
+            cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+            border-left: 4px solid transparent; 
+            border-radius: 0 30px 30px 0; /* Pill shape on right */
+            display: flex;
+            align-items: center;
+        }
+        
+        .tab-icon { font-size: 18px; margin-right: 12px; width: 22px; text-align: center; opacity: 0.6; transition: all var(--transition-speed); }
+        
+        .sidebar button.tab-link:hover { 
+            background-color: var(--sidebar-hover); 
+            color: #ffffff; 
+            transform: translateX(8px); 
+        }
+        .sidebar button.tab-link:hover .tab-icon { opacity: 1; transform: scale(1.1); }
+
+        /* Active Tab State */
+        .sidebar button.tab-link.active { 
+            background: linear-gradient(90deg, rgba(128,0,0,0.85) 0%, rgba(128,0,0,0) 100%); 
+            color: var(--pup-gold); 
+            border-left: 4px solid var(--pup-gold); 
+            font-weight: 600; 
+            transform: translateX(8px); 
+        }
+        .sidebar button.tab-link.active .tab-icon { 
+            opacity: 1; 
+            color: var(--pup-gold); 
+            filter: drop-shadow(0 0 5px rgba(241,196,15,0.4)); 
+        }
         
         /* Admin specific sidebar button */
-        .admin-menu { margin-top: auto; margin-bottom: 20px; border-top: 1px solid #444; }
+        .admin-menu { margin-top: auto; margin-bottom: 25px; border-top: 1px solid #333; padding-top: 20px; padding-right: 20px; }
 
         /* Main Content */
-        .main-content { flex: 1; padding: 40px; overflow-y: auto; }
-        .content-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .main-content { flex: 1; padding: 45px; overflow-y: auto; }
+        .content-section { display: none; animation: fadeIn 0.4s ease-out; }
         .content-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Cards */
-        .section-header { color: var(--pup-maroon); font-size: 24px; margin-bottom: 20px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
-        .card { background: var(--card-bg); border-radius: var(--border-radius); padding: 25px; margin-bottom: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); transition: transform var(--transition-speed); }
-        .card:hover { transform: translateY(-2px); box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-        .card h3 { font-size: 18px; margin-bottom: 15px; color: var(--text-main); }
+        /* Modern Cards */
+        .section-header { color: var(--pup-maroon); font-size: 26px; margin-bottom: 25px; border-bottom: 2px solid #eaeaea; padding-bottom: 12px; }
+        .card { background: var(--card-bg); border-radius: var(--border-radius); padding: 30px; margin-bottom: 25px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease; border: 1px solid rgba(0,0,0,0.02); }
+        .card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .card h3 { font-size: 19px; margin-bottom: 15px; color: var(--text-main); }
         
         /* Profile & About Section Styles */
-        .profile-header-flex { display: flex; gap: 25px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 20px; }
-        .profile-img { width: 170px; height: 170px; object-fit: cover; border-radius: 50%; border: 4px solid var(--pup-maroon); box-shadow: 0 4px 15px rgba(0,0,0,0.1); flex-shrink: 0; transition: transform var(--transition-speed), border-color var(--transition-speed); }
+        .profile-header-flex { display: flex; gap: 30px; align-items: flex-start; flex-wrap: wrap; margin-bottom: 25px; }
+        .profile-img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 4px solid var(--pup-maroon); box-shadow: 0 8px 25px rgba(128,0,0,0.2); flex-shrink: 0; transition: transform var(--transition-speed), border-color var(--transition-speed); }
         .profile-img:hover { transform: scale(1.05); border-color: var(--pup-gold); }
-        .profile-header-flex p { flex: 1; min-width: 280px; text-align: justify; text-indent: 30px; }
+        .profile-header-flex p { flex: 1; min-width: 280px; text-align: justify; text-indent: 30px; font-size: 15px; line-height: 1.8; }
 
         /* Forms & Buttons */
-        label { display: block; font-weight: 600; margin-top: 15px; margin-bottom: 5px; font-size: 14px; }
-        input[type="text"], input[type="file"], input[type="date"], textarea { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: var(--border-radius); font-family: 'Poppins', sans-serif; font-size: 14px; background-color: #fafafa; }
+        label { display: block; font-weight: 600; margin-top: 15px; margin-bottom: 8px; font-size: 14px; color: #444; }
+        input[type="text"], input[type="file"], input[type="date"], textarea { width: 100%; padding: 14px; border: 1px solid #e0e0e0; border-radius: 8px; font-family: 'Poppins', sans-serif; font-size: 14px; background-color: #fbfbfb; transition: border-color 0.3s, box-shadow 0.3s; }
+        input[type="text"]:focus, input[type="date"]:focus, textarea:focus { outline: none; border-color: var(--pup-maroon); box-shadow: 0 0 0 3px rgba(128,0,0,0.1); background-color: #fff; }
         textarea { resize: vertical; min-height: 120px; }
-        .btn { background-color: var(--pup-maroon); color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; transition: background-color var(--transition-speed); text-decoration: none; display: inline-block;}
-        .btn:hover { background-color: #600000; }
-        .btn-delete { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 4px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; width: 100%; }
+        
+        .btn { background-color: var(--pup-maroon); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; transition: all var(--transition-speed); text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(128,0,0,0.2); }
+        .btn:hover { background-color: #600000; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(128,0,0,0.3); }
+        .btn:active { transform: translateY(0); }
+        
+        .btn-delete { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; width: 100%; }
         .btn-delete:hover { background-color: #c0392b; }
-        .empty-state { padding: 20px; background: #fff8e1; border-left: 4px solid var(--pup-gold); border-radius: 4px; color: #665c00; }
+        .empty-state { padding: 25px; background: #fffdf5; border-left: 4px solid var(--pup-gold); border-radius: 8px; color: #665c00; font-weight: 500; }
 
         /* Social Links */
         .social-links { display: flex; gap: 15px; margin-top: 25px; }
-        .social-btn { padding: 10px 15px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; color: white; display: flex; align-items: center; transition: opacity 0.2s; }
-        .social-btn:hover { opacity: 0.8; }
+        .social-btn { padding: 10px 18px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; color: white; display: flex; align-items: center; transition: all 0.2s; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .social-btn:hover { transform: translateY(-3px); opacity: 0.9; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
         .bg-fb { background-color: #1877F2; }
-        .bg-git { background-color: #333333; }
+        .bg-git { background-color: #24292e; }
         .bg-gmail { background-color: #EA4335; }
 
         /* Modern Document Grid */
-        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; margin-top: 20px; }
-        .doc-card { background: white; border: none; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.06); display: flex; flex-direction: column; justify-content: space-between; transition: all var(--transition-speed); position: relative; overflow: hidden; }
-        .doc-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); }
-        .doc-card:hover { transform: translateY(-6px); box-shadow: 0 12px 25px rgba(0,0,0,0.12); }
-        .doc-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 15px; }
-        .doc-icon { font-size: 45px; margin-bottom: 15px; background: #fdf5f5; width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--pup-maroon); }
-        .doc-info h4 { color: var(--pup-maroon); font-size: 17px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+        .doc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 25px; margin-top: 20px; }
+        .doc-card { background: white; border: none; padding: 30px 25px; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; overflow: hidden; }
+        .doc-card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); }
+        .doc-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .doc-content { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 20px; }
+        .doc-icon { font-size: 50px; margin-bottom: 15px; background: #fcf4f4; width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: var(--pup-maroon); transition: transform 0.3s; }
+        .doc-card:hover .doc-icon { transform: scale(1.1); }
+        .doc-info h4 { color: var(--pup-maroon); font-size: 18px; font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
         .file-name { font-size: 13px; color: #777; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .view-btn { width: 100%; background-color: var(--pup-maroon); border-radius: 6px; padding: 12px; font-size: 14px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
+        .view-btn { width: 100%; background-color: var(--pup-maroon); border-radius: 8px; padding: 12px; font-size: 14px; margin-top: 0; color: white; border: none; cursor: pointer; font-weight: 600; transition: background 0.3s; }
         .view-btn:hover { background-color: #600000; }
         
         /* Hidden Delete Trigger */
-        .delete-trigger { position: absolute; top: 15px; right: 15px; font-size: 16px; cursor: pointer; opacity: 0; transition: opacity 0.3s ease; color: #aaa; padding: 5px; }
-        .doc-card:hover .delete-trigger { opacity: 0.3; }
-        .delete-trigger:hover { opacity: 1 !important; color: #e74c3c; }
+        .delete-trigger { position: absolute; top: 15px; right: 15px; font-size: 18px; cursor: pointer; opacity: 0; transition: all 0.3s ease; color: #bbb; padding: 5px; }
+        .doc-card:hover .delete-trigger { opacity: 0.4; }
+        .delete-trigger:hover { opacity: 1 !important; color: #e74c3c; transform: scale(1.1); }
 
         /* Interactive Weekly Reports */
         .report-header-wrap { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 20px; }
         .report-header-wrap .section-header { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         
-        .report-accordion { border: 1px solid #e0e0e0; border-radius: var(--border-radius); margin-bottom: 15px; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.03); overflow: hidden; }
-        .report-header { padding: 18px 20px; background-color: #fafafa; border-left: 4px solid var(--pup-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; user-select: none; }
-        .report-header:hover { background-color: #f0f0f0; }
-        .report-header h4 { margin: 0; color: var(--pup-maroon); font-size: 17px; }
-        .report-header .date { font-size: 13px; color: #555; display: block; margin-top: 4px; }
-        .toggle-icon { font-size: 18px; color: #888; transition: transform 0.3s; }
+        .report-accordion { border: 1px solid #eee; border-radius: var(--border-radius); margin-bottom: 15px; background: #fff; box-shadow: 0 4px 10px rgba(0,0,0,0.02); overflow: hidden; transition: box-shadow 0.3s; }
+        .report-accordion:hover { box-shadow: 0 6px 15px rgba(0,0,0,0.06); }
+        .report-header { padding: 20px 25px; background-color: #fdfdfd; border-left: 4px solid var(--pup-gold); cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: background 0.2s; user-select: none; }
+        .report-header:hover { background-color: #f7f7f7; }
+        .report-header h4 { margin: 0; color: var(--pup-maroon); font-size: 17px; font-weight: 600; }
+        .report-header .date { font-size: 13px; color: #666; display: block; margin-top: 5px; }
+        .toggle-icon { font-size: 18px; color: #999; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        .report-body { display: none; padding: 25px 20px; border-top: 1px solid #eee; background-color: #fff; animation: slideDown 0.3s ease-out; }
+        .report-body { display: none; padding: 25px; border-top: 1px solid #eee; background-color: #fff; animation: slideDown 0.3s ease-out; }
         .report-body.open { display: block; }
-        .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 20px; text-align: justify; }
+        .report-body-text { white-space: pre-wrap; font-size: 14px; color: #333; line-height: 1.8; margin-bottom: 25px; text-align: justify; }
         
         /* Photo Gallery Grid & Hover Effects */
         .report-gallery { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 20px; }
         .report-img-thumbnail { 
-            width: 130px; 
-            height: 130px; 
+            width: 140px; 
+            height: 140px; 
             object-fit: cover; 
-            border-radius: 6px; 
+            border-radius: 8px; 
             border: 1px solid #ddd; 
             cursor: pointer; 
             position: relative;
             z-index: 1;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s; 
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, z-index 0s; 
         }
         .report-img-thumbnail:hover { 
-            transform: scale(1.4); 
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3); 
+            transform: scale(1.5) translateY(-5px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4); 
             z-index: 10;
-            transition: transform 0.3s ease, box-shadow 0.3s ease, z-index 0s; 
         }
 
         .report-actions { text-align: right; border-top: 1px dashed #eee; padding-top: 15px; }
@@ -142,20 +184,20 @@
 
         /* Modal */
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.85); align-items: center; justify-content: center; backdrop-filter: blur(5px); }
-        .modal-content { background-color: #fff; border-radius: 8px; width: 80%; height: 85%; padding: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); position: relative; display: flex; flex-direction: column; }
-        .close-btn { position: absolute; top: -40px; right: 0; color: white; font-size: 35px; font-weight: bold; cursor: pointer; transition: color 0.2s; }
-        .close-btn:hover { color: var(--pup-gold); }
+        .modal-content { background-color: #fff; border-radius: 12px; width: 85%; height: 85%; padding: 10px; box-shadow: 0 15px 40px rgba(0,0,0,0.5); position: relative; display: flex; flex-direction: column; }
+        .close-btn { position: absolute; top: -45px; right: 0; color: white; font-size: 40px; font-weight: bold; cursor: pointer; transition: color 0.2s, transform 0.2s; }
+        .close-btn:hover { color: var(--pup-gold); transform: scale(1.1); }
         .modal-body { flex: 1; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
-        iframe { width: 100%; height: 100%; border: none; border-radius: 4px; }
-        .modal-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+        iframe { width: 100%; height: 100%; border: none; border-radius: 8px; }
+        .modal-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
 
         /* Company Profile Additions */
-        .company-header-flex { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
-        .company-logo { width: 130px; height: auto; }
-        .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: var(--border-radius); border: 1px solid #eee; }
+        .company-header-flex { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
+        .company-logo { width: 140px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+        .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .bullet-list { list-style-type: none; margin-top: 10px; }
-        .bullet-list li { margin-bottom: 10px; padding-left: 20px; position: relative; text-align: justify; }
-        .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 18px; top: -2px; }
+        .bullet-list li { margin-bottom: 12px; padding-left: 22px; position: relative; text-align: justify; font-size: 14.5px; }
+        .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 20px; top: -3px; }
     </style>
 </head>
 <body>
@@ -171,14 +213,14 @@
     <div class="wrapper">
         <nav class="sidebar">
             <div class="sidebar-menu">
-                <button class="tab-link active" onclick="openTab('about', this)">About Me</button>
-                <button class="tab-link" onclick="openTab('company', this)">Company Profile</button>
-                <button class="tab-link" onclick="openTab('view-reqs', this)">View Documents</button>
-                <button class="tab-link" onclick="openTab('reports', this)">Weekly Reports</button>
+                <button class="tab-link active" onclick="openTab('about', this)"><span class="tab-icon">👨‍💻</span> About Me</button>
+                <button class="tab-link" onclick="openTab('company', this)"><span class="tab-icon">🏢</span> Company Profile</button>
+                <button class="tab-link" onclick="openTab('view-reqs', this)"><span class="tab-icon">📂</span> View Documents</button>
+                <button class="tab-link" onclick="openTab('reports', this)"><span class="tab-icon">📊</span> Weekly Reports</button>
             </div>
             
             <div class="admin-menu">
-                <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;">🔒 Upload Documents</button>
+                <button class="tab-link" onclick="openTab('upload-reqs', this)" style="color: #888;"><span class="tab-icon">🔒</span> Upload</button>
             </div>
         </nav>
 
@@ -201,14 +243,14 @@
                     </ul>
 
                     <h3>Technical Stack</h3>
-                    <div style="display: flex; flex-wrap: wrap; gap: 8px; margin: 15px 0 25px 0;">
-                        <span style="background: #e34c26; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">HTML5</span>
-                        <span style="background: #264de4; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">CSS3</span>
-                        <span style="background: #f89820; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">JAVA</span>
-                        <span style="background: #323330; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">JAVASCRIPT</span>
-                        <span style="background: #00599C; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">C++</span>
-                        <span style="background: #3776ab; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">PYTHON</span>
-                        <span style="background: #039be5; color: white; padding: 5px 10px; border-radius: 4px; font-weight: 600; font-size: 12px;">FIREBASE</span>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0 25px 0;">
+                        <span style="background: #e34c26; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(227,76,38,0.3);">HTML5</span>
+                        <span style="background: #264de4; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(38,77,228,0.3);">CSS3</span>
+                        <span style="background: #f89820; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(248,152,32,0.3);">JAVA</span>
+                        <span style="background: #323330; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(50,51,48,0.3);">JAVASCRIPT</span>
+                        <span style="background: #00599C; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(0,89,156,0.3);">C++</span>
+                        <span style="background: #3776ab; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(55,118,171,0.3);">PYTHON</span>
+                        <span style="background: #039be5; color: white; padding: 6px 12px; border-radius: 6px; font-weight: 600; font-size: 12px; box-shadow: 0 2px 5px rgba(3,155,229,0.3);">FIREBASE</span>
                     </div>
 
                     <h3 style="margin-top: 35px;">About This Portfolio</h3>
@@ -230,7 +272,7 @@
                         <li><strong>Email:</strong> kirbychristianclaro@gmail.com</li>
                     </ul>
 
-                    <div class="social-links" style="border-top: 1px solid #eee; padding-top: 20px;">
+                    <div class="social-links" style="border-top: 1px solid #eee; padding-top: 25px;">
                         <a href="https://www.facebook.com/kirby.claro.2025/" target="_blank" class="social-btn bg-fb">Facebook</a>
                         <a href="https://github.com/KirbyClaro" target="_blank" class="social-btn bg-git">GitHub</a>
                         <a href="mailto:kirbychristianclaro@gmail.com" class="social-btn bg-gmail">Gmail</a>
@@ -243,18 +285,18 @@
                 <div class="card company-header-flex">
                     <img src="images/ntclogo.jpg" alt="NTC Logo" class="company-logo">
                     <div>
-                        <h3 style="margin-bottom: 5px; color: var(--pup-maroon); font-size: 22px;">National Telecommunications Commission</h3>
+                        <h3 style="margin-bottom: 5px; color: var(--pup-maroon); font-size: 24px;">National Telecommunications Commission</h3>
                         <p style="font-weight: 600; font-size: 16px; color: #555;">National Capital Region (NCR) Branch</p>
-                        <p style="font-size: 14px; margin-top: 10px; max-width: 600px;">The NTC is the primary government agency entrusted with the oversight, adjudication, and control of all telecommunications services, television, and radio networks throughout the Philippines.</p>
+                        <p style="font-size: 14px; margin-top: 10px; max-width: 600px; line-height: 1.7;">The NTC is the primary government agency entrusted with the oversight, adjudication, and control of all telecommunications services, television, and radio networks throughout the Philippines.</p>
                     </div>
                 </div>
 
-                <div class="card" style="border-left: 4px solid var(--pup-maroon);">
+                <div class="card" style="border-left: 5px solid var(--pup-maroon);">
                     <h3 style="color: var(--pup-maroon);">Deployment Details: IT Unit</h3>
                     <p style="margin-bottom: 15px;"><strong>Role:</strong> Computer Engineering Intern</p>
-                    <p style="margin-bottom: 15px; text-align: justify;">The IT Unit’s main daily function is to streamline institutional operations by maintaining critical hardware, managing database systems for licensing and requests, and developing custom software solutions to automate administrative workflows. We serve as the technical backbone of the agency, ensuring both the integrity of government records and the efficiency of daily office processes.</p>
+                    <p style="margin-bottom: 20px; text-align: justify; line-height: 1.8;">The IT Unit’s main daily function is to streamline institutional operations by maintaining critical hardware, managing database systems for licensing and requests, and developing custom software solutions to automate administrative workflows. We serve as the technical backbone of the agency, ensuring both the integrity of government records and the efficiency of daily office processes.</p>
                     
-                    <h4 style="margin-bottom: 10px; color: #444; font-size: 15px;">Key Unit Personnel (Financial and Administrative Division):</h4>
+                    <h4 style="margin-bottom: 12px; color: #444; font-size: 15px;">Key Unit Personnel (Financial and Administrative Division):</h4>
                     <ul class="bullet-list">
                         <li><strong>Maria Angela S. Pingoy</strong> – Chief Administrative Officer, FAD</li>
                         <li><strong>Nomeriano R. Obiña III</strong> – Engineer II / IT Supervisor</li>
@@ -264,35 +306,35 @@
 
                 <div class="card">
                     <h3>NTC NCR Office & Location</h3>
-                    <p style="margin-bottom: 15px; color: #555; font-size: 14px;"><strong>Address:</strong> Sen. Miriam P. Defensor Santiago Ave. (formerly BIR road), East Triangle, Diliman, Quezon City 1101</p>
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <p style="margin-bottom: 20px; color: #555; font-size: 14px;"><strong>Address:</strong> Sen. Miriam P. Defensor Santiago Ave. (formerly BIR road), East Triangle, Diliman, Quezon City 1101</p>
+                    <div style="display: flex; gap: 25px; flex-wrap: wrap;">
                         <img src="images/ntcbuilding.jpg" alt="NTC NCR Building" class="building-img" style="flex: 1; min-width: 300px; height: 350px;">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2798287342935!2d121.0422904!3d14.6400268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b70f6b3e8e7b%3A0x6b6c0e86b0a94371!2sNational%20Telecommunications%20Commission!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph" style="flex: 1; min-width: 300px; height: 350px; border:0; border-radius: var(--border-radius);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2798287342935!2d121.0422904!3d14.6400268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b70f6b3e8e7b%3A0x6b6c0e86b0a94371!2sNational%20Telecommunications%20Commission!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph" style="flex: 1; min-width: 300px; height: 350px; border:0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-                    <div class="card">
-                        <h3>Our Vision</h3>
-                        <p style="text-align: justify;">By 2025, the NTC is a world-class regulatory agency meeting the challenges of the digital world.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px;">
+                    <div class="card" style="margin-bottom: 0;">
+                        <h3 style="display: flex; align-items: center; gap: 10px;">👁️ Our Vision</h3>
+                        <p style="text-align: justify; line-height: 1.8;">By 2025, the NTC is a world-class regulatory agency meeting the challenges of the digital world.</p>
                     </div>
-                    <div class="card">
-                        <h3>Our Mission</h3>
-                        <p style="text-align: justify;">Maintain a responsive regulatory environment for an effective telecommunications/Information and Communications Technology (ICT) sector.</p>
+                    <div class="card" style="margin-bottom: 0;">
+                        <h3 style="display: flex; align-items: center; gap: 10px;">🎯 Our Mission</h3>
+                        <p style="text-align: justify; line-height: 1.8;">Maintain a responsive regulatory environment for an effective telecommunications/Information and Communications Technology (ICT) sector.</p>
                     </div>
                 </div>
 
-                <div class="card">
+                <div class="card" style="margin-top: 25px;">
                     <h3>Agency Mandate & Core Values</h3>
-                    <p style="margin-bottom: 15px; font-weight: 600;">Core Functions:</p>
-                    <ul class="bullet-list" style="margin-bottom: 25px;">
+                    <p style="margin-bottom: 15px; font-weight: 600; color: var(--pup-maroon);">Core Functions:</p>
+                    <ul class="bullet-list" style="margin-bottom: 30px;">
                         <li>Regulate the installation, operation, and maintenance of radio stations for both private and public use.</li>
                         <li>Regulate and supervise the provision of public telecommunications services.</li>
                         <li>Manage the national radio frequency spectrum.</li>
                         <li>Regulate and supervise radio and television broadcast stations, including cable (CATV) and pay television.</li>
                     </ul>
 
-                    <p style="margin-bottom: 15px; font-weight: 600;">Core Values:</p>
+                    <p style="margin-bottom: 15px; font-weight: 600; color: var(--pup-maroon);">Core Values:</p>
                     <ul class="bullet-list">
                         <li><strong>Regulation and Supervision:</strong> Ensuring that telecommunications services operate efficiently and fairly, adhering to national laws and policies.</li>
                         <li><strong>Consumer Protection:</strong> Protecting consumers through fair competition and compliance with service standards.</li>
@@ -302,18 +344,17 @@
                     </ul>
                 </div>
 
-                <!-- UPDATED: Organizational Structure Card with multiple images -->
                 <div class="card">
                     <h3>Organizational Structure</h3>
-                    <p style="margin-bottom: 15px; color: #555; font-size: 14px;">National Capital Region (NCR) - Main & Support Staff</p>
-                    <img src="images/orgchart1.png" alt="NTC NCR Organizational Chart - Main" style="width: 100%; height: auto; border-radius: var(--border-radius); border: 1px solid #eee; margin-bottom: 20px;">
-                    <img src="images/orgchart2.png" alt="NTC NCR Organizational Chart - Support Staff" style="width: 100%; height: auto; border-radius: var(--border-radius); border: 1px solid #eee;">
+                    <p style="margin-bottom: 20px; color: #555; font-size: 14px;">National Capital Region (NCR) - Main & Support Staff</p>
+                    <img src="images/orgchart1.png" alt="NTC NCR Organizational Chart - Main" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <img src="images/orgchart2.png" alt="NTC NCR Organizational Chart - Support Staff" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
                 </div>
             </section>
 
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements (Admin)</h2>
-                <p style="margin-bottom: 20px; color: #666;">Secured Portal. Upload your official documents here.</p>
+                <p style="margin-bottom: 25px; color: #666;">Secured Portal. Upload your official documents here.</p>
                 
                 <div class="card">
                     <h3>Curriculum Vitae (CV)</h3>
@@ -377,8 +418,8 @@
                     <button class="btn" style="margin-top: 0;" onclick="toggleReportForm()">+ Add Weekly Report</button>
                 </div>
                 
-                <div class="card" id="report-form-container" style="display: none; border-left: 4px solid var(--pup-gold);">
-                    <h3>Create New Weekly Log</h3>
+                <div class="card" id="report-form-container" style="display: none; border-left: 5px solid var(--pup-gold);">
+                    <h3 style="margin-bottom: 20px;">Create New Weekly Log</h3>
                     
                     <label for="report-title">Week Title</label>
                     <input type="text" id="report-title" placeholder="e.g., Week 1: General Orientation">
@@ -394,7 +435,7 @@
                     
                     <br>
                     <button class="btn" onclick="submitReportToFirebase()" id="submit-report-btn">Submit Weekly Report</button>
-                    <button class="btn" style="background-color: #777; margin-left: 10px;" onclick="toggleReportForm()">Cancel</button>
+                    <button class="btn" style="background-color: #888; margin-left: 10px;" onclick="toggleReportForm()">Cancel</button>
                 </div>
 
                 <div id="report-history-container">
@@ -431,7 +472,7 @@
         db.collection("documents").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const docGrid = document.getElementById('doc-grid');
             if (snapshot.empty) {
-                docGrid.innerHTML = `<div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">No documents uploaded yet. Go to the "Upload Requirements" tab to add your files.</div>`;
+                docGrid.innerHTML = `<div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">No documents uploaded yet. Admin can add files via the Secure Portal.</div>`;
                 return;
             }
             docGrid.innerHTML = "";
@@ -459,7 +500,7 @@
         db.collection("reports").orderBy("createdAt", "desc").onSnapshot((snapshot) => {
             const historyContainer = document.getElementById('report-history-container');
             if (snapshot.empty) {
-                historyContainer.innerHTML = `<div class="empty-state" id="empty-reports"><p>No reports submitted yet. Click "+ Add Weekly Report" to log your first entry.</p></div>`;
+                historyContainer.innerHTML = `<div class="empty-state" id="empty-reports"><p>No reports submitted yet. Admin can log the first entry.</p></div>`;
                 return;
             }
             historyContainer.innerHTML = "";
@@ -468,7 +509,6 @@
                 const reportCard = document.createElement('div');
                 reportCard.className = 'report-accordion';
                 
-                // Constructing the image HTML gallery
                 let galleryHtml = '';
                 if (data.imageUrls && data.imageUrls.length > 0) {
                     galleryHtml = `<div class="report-gallery">`;
@@ -476,7 +516,7 @@
                         galleryHtml += `<img src="${url}" alt="Report Image" class="report-img-thumbnail" onclick="openModal('${url}', 'image')">`;
                     });
                     galleryHtml += `</div>`;
-                } else if (data.imageUrl) { // Fallback for your older single uploads
+                } else if (data.imageUrl) { 
                     galleryHtml = `<div class="report-gallery">
                                       <img src="${data.imageUrl}" alt="Report Image" class="report-img-thumbnail" onclick="openModal('${data.imageUrl}', 'image')">
                                    </div>`;
@@ -494,7 +534,7 @@
                         <div class="report-body-text">${data.text}</div>
                         ${galleryHtml}
                         <div class="report-actions">
-                            <button class="btn-delete" style="width: auto; padding: 6px 15px;" onclick="deleteReportFromFirebase('${doc.id}')">Delete Log</button>
+                            <button class="btn-delete" style="width: auto; padding: 8px 18px;" onclick="deleteReportFromFirebase('${doc.id}')">Delete Log</button>
                         </div>
                     </div>
                 `;
@@ -502,14 +542,14 @@
             });
         });
 
-        // Trigger Document Upload (Updated to save filePath)
+        // Trigger Document Upload 
         async function triggerUpload(inputId, docType) {
             const fileInput = document.getElementById(inputId);
             const file = fileInput.files[0];
             if (!file) { alert("Please choose a file first!"); return; }
 
-            const password = prompt(`Enter password to upload ${docType}:`);
-            if (password !== "admin2026") { alert("Incorrect password."); return; }
+            const password = prompt(`Enter admin password to upload ${docType}:`);
+            if (password !== "admin2026") { alert("Access Denied: Incorrect password."); return; }
 
             alert("Uploading... Please wait.");
             
@@ -536,7 +576,7 @@
             }
         }
 
-        // Submit Weekly Report with Multiple Images Support
+        // Submit Weekly Report
         async function submitReportToFirebase() {
             const title = document.getElementById('report-title').value;
             const date = document.getElementById('report-date').value;
@@ -546,8 +586,8 @@
 
             if(!date || !text || !title) { alert("Please fill out the Title, Date, and Details fields."); return; }
             
-            const password = prompt("Enter password to submit report:");
-            if (password !== "admin2026") { alert("Incorrect password."); return; }
+            const password = prompt("Enter admin password to submit report:");
+            if (password !== "admin2026") { alert("Access Denied: Incorrect password."); return; }
 
             alert("Saving report... Please wait.");
 
@@ -590,9 +630,9 @@
             }
         }
 
-        // Delete Document (Updated to delete from Storage as well)
+        // Delete Document 
         async function deleteDocumentFromFirebase(docId) {
-            const password = prompt("Enter password to delete document:");
+            const password = prompt("Restricted Area. Enter admin password to delete document:");
             if (password === "admin2026") {
                 try { 
                     const docRef = db.collection("documents").doc(docId);
@@ -600,26 +640,25 @@
                     
                     if (doc.exists) {
                         const data = doc.data();
-                        
                         if (data.filePath) {
                             await storage.ref(data.filePath).delete().catch(e => console.log("File not found in storage", e));
                         }
                     }
                     
                     await docRef.delete(); 
-                    alert("Document deleted securely from database and storage.");
+                    alert("Document deleted securely.");
                 } catch (error) { 
                     console.error("Error deleting:", error);
                     alert("Error deleting document."); 
                 }
             } else if (password !== null) {
-                alert("Incorrect password.");
+                alert("Access Denied: Incorrect password.");
             }
         }
 
         // Delete Report
         async function deleteReportFromFirebase(docId) {
-            const password = prompt("Enter password to delete this report:");
+            const password = prompt("Restricted Area. Enter admin password to delete this report:");
             if (password === "admin2026") {
                 try { 
                     const docRef = db.collection("reports").doc(docId);
@@ -627,7 +666,6 @@
                     
                     if (doc.exists) {
                         const data = doc.data();
-                        
                         if (data.imagePaths && data.imagePaths.length > 0) {
                             for(let path of data.imagePaths) {
                                 await storage.ref(path).delete().catch(e => console.log("Image not found", e));
@@ -645,7 +683,7 @@
                     alert("Error deleting report."); 
                 }
             } else if (password !== null) {
-                alert("Incorrect password.");
+                alert("Access Denied: Incorrect password.");
             }
         }
 
