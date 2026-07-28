@@ -138,13 +138,12 @@
         .project-links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: white; background: #24292e; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 600; transition: background 0.2s; }
         .project-links a:hover { background: #000; }
 
-        /* Animated Skills Bars - FIXED BUG */
+        /* Animated Skills Bars */
         .skills-container { padding: 30px; }
         .skill-row { margin-bottom: 18px; }
         .skill-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #444; }
         .skill-bar-bg { width: 100%; height: 8px; background: #f0f0f0; border-radius: 10px; overflow: hidden; }
         .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--pup-maroon), var(--pup-gold)); border-radius: 10px; width: 0; }
-        /* Using the CSS variable --target-width to ensure the animation knows exactly where to stop */
         .content-section.active .skill-bar-fill { animation: fillBar 1.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards; animation-delay: 0.3s; }
         
         @keyframes fillBar { 
@@ -372,10 +371,11 @@
                         <div style="flex: 1; min-width: 280px;">
                             <div class="quick-facts-ribbon">
                                 <span class="fact-badge">🏆 President's Lister</span>
-                                <span class="fact-badge">⚙️ Systems Architecture</span>
+                                <span class="fact-badge">💻 Software Development</span>
+                                <span class="fact-badge">🔧 Hardware Maintenance</span>
                                 <span class="fact-badge">📐 AutoCAD Proficient</span>
                             </div>
-                            <p style="text-align: justify; text-indent: 30px; font-size: 14.5px; line-height: 1.8; color: #444;">I am a dedicated second-year Computer Engineering student at the Polytechnic University of the Philippines (PUP), where I have been recognized as a President's Lister for my academic excellence. Driven by a passion for innovation, I specialize in systems architecture, hardware maintenance, and full-stack web development. I actively leverage technologies like JavaScript, C++, and Python to build efficient, scalable solutions. My technical background is complemented by a strong foundation in architectural drafting and a commitment to continuous learning in the rapidly evolving tech landscape. I am eager to apply my technical expertise and problem-solving skills in a professional OJT environment to contribute to meaningful, real-world projects.</p>
+                            <p style="text-align: justify; text-indent: 30px; font-size: 14.5px; line-height: 1.8; color: #444;">I am a dedicated second-year Computer Engineering student at the Polytechnic University of the Philippines (PUP), where I have been recognized as a President's Lister for my academic excellence. Driven by a passion for innovation, I specialize in software development, hardware maintenance, and full-stack web integration. I actively leverage technologies like JavaScript, C++, and Python to build efficient, scalable solutions. My technical background is complemented by a strong foundation in architectural drafting and a commitment to continuous learning in the rapidly evolving tech landscape. I am eager to apply my technical expertise and problem-solving skills in a professional OJT environment to contribute to meaningful, real-world projects.</p>
                         </div>
                     </div>
                 </div>
@@ -387,7 +387,6 @@
                         <h4>Employee DTR App</h4>
                         <p>A modern, production-ready desktop application built with Python, PySide6, and SQLAlchemy featuring secure, automated timekeeping.</p>
                         <div class="project-links">
-                            <!-- UPDATED LINK -->
                             <a href="https://github.com/KirbyClaro/employee_daily_time_record_app" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
@@ -397,7 +396,6 @@
                         <h4>OS Algorithms</h4>
                         <p>A technical collection of core Operating System implementations in Python, covering CPU scheduling, memory management, and paging.</p>
                         <div class="project-links">
-                            <!-- UPDATED LINK -->
                             <a href="https://github.com/KirbyClaro/operating_system_algorithms" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
@@ -407,7 +405,6 @@
                         <h4>Request System</h4>
                         <p>A specialized web-based management tool developed to securely streamline and automate operational administrative workflows.</p>
                         <div class="project-links">
-                            <!-- UPDATED LINK -->
                             <a href="https://github.com/KirbyClaro/request_system" target="_blank">💻 View on GitHub</a>
                         </div>
                     </div>
