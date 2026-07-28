@@ -141,7 +141,7 @@
         .bg-git { background-color: #24292e; }
         .bg-gmail { background-color: #EA4335; }
 
-        /* Progress Bar & Filter Controls for View Documents */
+        /* Progress Bar & Filter Controls */
         .doc-dashboard-header { margin-bottom: 25px; }
         .progress-card { background: #fff; padding: 20px 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.03); border-left: 5px solid var(--pup-maroon); margin-bottom: 20px; }
         .progress-title-flex { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
@@ -230,13 +230,34 @@
         iframe { width: 100%; height: 100%; border: none; border-radius: 8px; }
         .modal-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 8px; }
 
-        /* Company Profile Additions */
+        /* --- NEW: Interactive Company Profile Additions --- */
         .company-header-flex { display: flex; gap: 30px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
         .company-logo { width: 140px; height: auto; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
         .building-img { width: 100%; height: 350px; object-fit: cover; border-radius: 12px; border: 1px solid #eee; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
         .bullet-list { list-style-type: none; margin-top: 10px; }
         .bullet-list li { margin-bottom: 12px; padding-left: 22px; position: relative; text-align: justify; font-size: 14.5px; }
         .bullet-list li::before { content: "▪"; color: var(--pup-maroon); font-weight: bold; position: absolute; left: 0; font-size: 20px; top: -3px; }
+
+        /* Interactive Core Values Grid */
+        .value-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-top: 20px; }
+        .value-card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 12px; transition: all 0.3s ease; border-left: 4px solid var(--pup-maroon); }
+        .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-left-color: var(--pup-gold); background: #fff; }
+        .value-icon { font-size: 28px; margin-bottom: 10px; display: inline-block; transition: transform 0.3s; }
+        .value-card:hover .value-icon { transform: scale(1.1) rotate(5deg); }
+        .value-card h4 { color: var(--pup-maroon); font-size: 15px; margin-bottom: 8px; }
+        .value-card p { font-size: 13px; color: #555; margin: 0; text-align: justify; line-height: 1.6; }
+
+        /* Team Roster List */
+        .team-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+        .team-member { display: flex; align-items: center; gap: 15px; background: #fff; padding: 12px 20px; border-radius: 10px; border: 1px solid #eee; transition: all 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
+        .team-member:hover { border-color: var(--pup-maroon); box-shadow: 0 5px 15px rgba(128,0,0,0.08); transform: translateX(6px); }
+        .team-avatar { width: 45px; height: 45px; background: linear-gradient(135deg, var(--pup-maroon), #500000); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; font-size: 16px; flex-shrink: 0; box-shadow: 0 3px 8px rgba(128,0,0,0.2); }
+        .team-info h5 { margin: 0; font-size: 15px; color: #333; }
+        .team-info p { margin: 0; font-size: 12px; color: #777; font-weight: 500; }
+
+        /* Zoomable Images */
+        .zoomable-img { cursor: zoom-in; transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .zoomable-img:hover { transform: scale(1.02); }
 
         /* Toast Notifications */
         #toast-container { position: fixed; bottom: 30px; right: 30px; z-index: 10000; display: flex; flex-direction: column; gap: 10px; }
@@ -370,19 +391,37 @@
                     <p style="margin-bottom: 15px;"><strong>Role:</strong> Computer Engineering Intern</p>
                     <p style="margin-bottom: 20px; text-align: justify; line-height: 1.8;">The IT Unit’s main daily function is to streamline institutional operations by maintaining critical hardware, managing database systems for licensing and requests, and developing custom software solutions to automate administrative workflows. We serve as the technical backbone of the agency, ensuring both the integrity of government records and the efficiency of daily office processes.</p>
                     
-                    <h4 style="margin-bottom: 12px; color: #444; font-size: 15px;">Key Unit Personnel (Financial and Administrative Division):</h4>
-                    <ul class="bullet-list">
-                        <li><strong>Maria Angela S. Pingoy</strong> – Chief Administrative Officer, FAD</li>
-                        <li><strong>Nomeriano R. Obiña III</strong> – Engineer II / IT Supervisor</li>
-                        <li><strong>Atty. Therese Tiffanie V. Torres</strong> – Legal Officer</li>
-                    </ul>
+                    <h4 style="margin-bottom: 12px; color: #444; font-size: 15px;">Key Unit Personnel (FAD):</h4>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-avatar">MP</div>
+                            <div class="team-info">
+                                <h5>Maria Angela S. Pingoy</h5>
+                                <p>Chief Administrative Officer, FAD</p>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">NO</div>
+                            <div class="team-info">
+                                <h5>Nomeriano R. Obiña III</h5>
+                                <p>Engineer II / IT Supervisor</p>
+                            </div>
+                        </div>
+                        <div class="team-member">
+                            <div class="team-avatar">TT</div>
+                            <div class="team-info">
+                                <h5>Atty. Therese Tiffanie V. Torres</h5>
+                                <p>Legal Officer</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="card">
                     <h3>NTC NCR Office & Location</h3>
                     <p style="margin-bottom: 20px; color: #555; font-size: 14px;"><strong>Address:</strong> Sen. Miriam P. Defensor Santiago Ave. (formerly BIR road), East Triangle, Diliman, Quezon City 1101</p>
                     <div style="display: flex; gap: 25px; flex-wrap: wrap;">
-                        <img src="images/ntcbuilding.jpg" alt="NTC NCR Building" class="building-img" style="flex: 1; min-width: 300px; height: 350px;">
+                        <img src="images/ntcbuilding.jpg" alt="NTC NCR Building" class="building-img zoomable-img" style="flex: 1; min-width: 300px; height: 350px;" onclick="openModal(this.src, 'image')">
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3860.2798287342935!2d121.0422904!3d14.6400268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b70f6b3e8e7b%3A0x6b6c0e86b0a94371!2sNational%20Telecommunications%20Commission!5e0!3m2!1sen!2sph!4v1700000000000!5m2!1sen!2sph" style="flex: 1; min-width: 300px; height: 350px; border:0; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
@@ -398,31 +437,51 @@
                     </div>
                 </div>
 
-                <div class="card" style="margin-top: 25px;">
-                    <h3>Agency Mandate & Core Values</h3>
-                    <p style="margin-bottom: 15px; font-weight: 600; color: var(--pup-maroon);">Core Functions:</p>
-                    <ul class="bullet-list" style="margin-bottom: 30px;">
+                <div class="card" style="margin-top: 25px; background: transparent; border: none; box-shadow: none; padding: 0;">
+                    <h3 style="margin-bottom: 5px; padding-left: 5px;">Agency Mandate & Core Values</h3>
+                    <p style="margin-bottom: 20px; font-weight: 600; color: var(--pup-maroon); padding-left: 5px;">Core Functions:</p>
+                    <ul class="bullet-list" style="margin-bottom: 30px; background: #fff; padding: 25px 25px 25px 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
                         <li>Regulate the installation, operation, and maintenance of radio stations for both private and public use.</li>
                         <li>Regulate and supervise the provision of public telecommunications services.</li>
                         <li>Manage the national radio frequency spectrum.</li>
                         <li>Regulate and supervise radio and television broadcast stations, including cable (CATV) and pay television.</li>
                     </ul>
 
-                    <p style="margin-bottom: 15px; font-weight: 600; color: var(--pup-maroon);">Core Values:</p>
-                    <ul class="bullet-list">
-                        <li><strong>Regulation and Supervision:</strong> Ensuring that telecommunications services operate efficiently and fairly, adhering to national laws and policies.</li>
-                        <li><strong>Consumer Protection:</strong> Protecting consumers through fair competition and compliance with service standards.</li>
-                        <li><strong>Quality Service:</strong> Promoting quality service and ensuring that all telecommunications providers meet established standards.</li>
-                        <li><strong>Radio Spectrum Management:</strong> Efficiently managing the radio frequency spectrum to prevent interference and optimize bandwidth.</li>
-                        <li><strong>Adaptability:</strong> Adapting to new challenges in privacy, cybersecurity, and connectivity to ensure a secure and reliable telecommunications environment.</li>
-                    </ul>
+                    <p style="margin-bottom: 5px; font-weight: 600; color: var(--pup-maroon); padding-left: 5px;">Core Values:</p>
+                    <div class="value-grid">
+                        <div class="value-card">
+                            <span class="value-icon">⚖️</span>
+                            <h4>Regulation & Supervision</h4>
+                            <p>Ensuring that telecommunications services operate efficiently and fairly, adhering to national laws and policies.</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon">🛡️</span>
+                            <h4>Consumer Protection</h4>
+                            <p>Protecting consumers through fair competition and compliance with service standards.</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon">⭐</span>
+                            <h4>Quality Service</h4>
+                            <p>Promoting quality service and ensuring that all telecommunications providers meet established standards.</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon">📡</span>
+                            <h4>Spectrum Management</h4>
+                            <p>Efficiently managing the radio frequency spectrum to prevent interference and optimize bandwidth.</p>
+                        </div>
+                        <div class="value-card">
+                            <span class="value-icon">🔄</span>
+                            <h4>Adaptability</h4>
+                            <p>Adapting to new challenges in privacy, cybersecurity, and connectivity to ensure a secure environment.</p>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="card">
+                <div class="card" style="margin-top: 25px;">
                     <h3>Organizational Structure</h3>
-                    <p style="margin-bottom: 20px; color: #555; font-size: 14px;">National Capital Region (NCR) - Main & Support Staff</p>
-                    <img src="images/orgchart1.png" alt="NTC NCR Organizational Chart - Main" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                    <img src="images/orgchart2.png" alt="NTC NCR Organizational Chart - Support Staff" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+                    <p style="margin-bottom: 20px; color: #555; font-size: 14px;">National Capital Region (NCR) - Main & Support Staff <em>(Click to zoom)</em></p>
+                    <img src="images/orgchart1.png" alt="NTC NCR Organizational Chart - Main" class="zoomable-img" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" onclick="openModal(this.src, 'image')">
+                    <img src="images/orgchart2.png" alt="NTC NCR Organizational Chart - Support Staff" class="zoomable-img" style="width: 100%; height: auto; border-radius: 8px; border: 1px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05);" onclick="openModal(this.src, 'image')">
                 </div>
             </section>
 
@@ -480,7 +539,6 @@
             <section id="view-reqs" class="content-section">
                 <h2 class="section-header">View My Documents</h2>
                 
-                <!-- NEW: Progress Bar & Controls Dashboard -->
                 <div class="doc-dashboard-header">
                     <div class="progress-card">
                         <div class="progress-title-flex">
@@ -574,7 +632,7 @@
         const db = firebase.firestore();
         const storage = firebase.storage();
 
-        let allDocuments = []; // Global cache for search/filter
+        let allDocuments = []; 
         let activeDocFilter = 'all';
 
         // Modern Toast Notification Function
@@ -656,7 +714,6 @@
                 const badgeLabel = isPdf ? 'PDF' : 'IMAGE';
                 const iconHtml = isPdf ? '📕' : '🖼️';
                 
-                // Formatted Date
                 let formattedDate = "Uploaded Recently";
                 if (data.createdAt && data.createdAt.toDate) {
                     formattedDate = "Uploaded: " + data.createdAt.toDate().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
