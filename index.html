@@ -27,7 +27,7 @@
 
         /* Global */
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+        body { font-family: 'Poppins', sans-serif; background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; scroll-behavior: smooth; }
 
         /* Custom Scrollbars */
         ::-webkit-scrollbar { width: 8px; }
@@ -91,6 +91,11 @@
         
         .admin-menu { margin-top: auto; margin-bottom: 25px; border-top: 1px solid #333; padding-top: 20px; padding-right: 20px; }
 
+        /* Tactile Button Feedback */
+        .btn:active, .action-btn:active, .tab-link:active, .view-btn:active, .download-btn:active, .filter-pill:active {
+            transform: scale(0.97) !important;
+        }
+
         /* Main Content */
         .main-content { flex: 1; padding: 45px; overflow-y: auto; display: flex; flex-direction: column; }
         .content-section { display: none; flex: 1; }
@@ -125,14 +130,23 @@
         .fact-badge { background: #fdf5f5; color: var(--pup-maroon); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: 1px solid #f9e8e8; box-shadow: 0 2px 5px rgba(128,0,0,0.05); transition: all 0.3s ease; cursor: default; }
         .fact-badge:hover { transform: translateY(-2px); background: var(--pup-maroon); color: white; box-shadow: 0 5px 15px rgba(128,0,0,0.15); }
 
-        /* Project Cards Grid */
+        /* Project Cards Grid & Tags */
         .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .project-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; position: relative; overflow: hidden; }
         .project-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--pup-gold); transition: width 0.3s ease; opacity: 0.8; }
-        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); border-color: #e0e0e0; }
+        
+        /* New Micro-interaction Hover */
+        .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(241, 196, 15, 0.15); border-color: var(--pup-gold); }
         .project-card:hover::before { width: 6px; background: var(--pup-maroon); opacity: 1; }
+        
         .project-icon { font-size: 28px; margin-bottom: 15px; background: #f9f9f9; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
         .project-card h4 { color: #222; font-size: 17px; margin-bottom: 10px; }
+        
+        /* Project Tech Stack Tags */
+        .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 15px; }
+        .project-tag { font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 8px; background: #eee; color: #555; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s; }
+        .project-card:hover .project-tag { background: #fdf5f5; color: var(--pup-maroon); }
+
         .project-card p { font-size: 13px; color: #666; flex: 1; line-height: 1.6; margin-bottom: 20px; text-align: justify; }
         .project-links { margin-top: auto; }
         .project-links a { display: inline-flex; align-items: center; gap: 6px; text-decoration: none; color: white; background: #24292e; padding: 8px 15px; border-radius: 6px; font-size: 12px; font-weight: 600; transition: background 0.2s; }
@@ -175,7 +189,6 @@
         
         .btn { background-color: var(--pup-maroon); color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 14px; margin-top: 15px; transition: all var(--transition-speed); text-decoration: none; display: inline-block; box-shadow: 0 4px 10px rgba(128,0,0,0.2); }
         .btn:hover { background-color: #600000; transform: translateY(-2px); box-shadow: 0 6px 15px rgba(128,0,0,0.3); }
-        .btn:active { transform: translateY(0); }
         
         .btn-delete { background-color: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-block; transition: background 0.2s; width: 100%; }
         .btn-delete:hover { background-color: #c0392b; }
@@ -280,7 +293,10 @@
 
         .value-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-top: 20px; }
         .value-card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 12px; transition: all 0.3s ease; border-left: 4px solid var(--pup-maroon); }
-        .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.06); border-left-color: var(--pup-gold); background: #fff; }
+        
+        /* New Micro-interaction Hover */
+        .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(241, 196, 15, 0.15); border-left-color: var(--pup-gold); background: #fff; }
+        
         .value-icon { font-size: 28px; margin-bottom: 10px; display: inline-block; transition: transform 0.3s; }
         .value-card:hover .value-icon { transform: scale(1.1) rotate(5deg); }
         .value-card h4 { color: var(--pup-maroon); font-size: 15px; margin-bottom: 8px; }
@@ -304,6 +320,32 @@
         .toast.fadeOut { opacity: 0; transform: translateX(100%); transition: all 0.4s ease; }
         @keyframes slideInRight { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 45px;
+            height: 45px;
+            background-color: var(--pup-maroon);
+            color: white;
+            border: 2px solid var(--pup-gold);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+        }
+
+        #back-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            background-color: #600000;
+        }
+
         /* Footer */
         footer { margin-top: auto; padding: 25px 0 10px 0; text-align: center; border-top: 1px solid #eaeaea; color: #888; font-size: 13px; }
 
@@ -324,6 +366,8 @@
             .doc-controls-flex { flex-direction: column; align-items: stretch; }
             .profile-img-container { width: 100%; text-align: center; }
             .quick-facts-ribbon { justify-content: center; }
+            #back-to-top { bottom: 20px; right: 20px; width: 40px; height: 40px; font-size: 16px; }
+            #toast-container { bottom: 70px; right: 20px; }
         }
     </style>
 </head>
@@ -358,7 +402,7 @@
             </div>
         </nav>
 
-        <main class="main-content">
+        <main class="main-content" id="main-content-scroll">
             
             <section id="about" class="content-section active">
                 <h2 class="section-header">Professional Profile</h2>
@@ -385,6 +429,11 @@
                     <div class="project-card">
                         <div class="project-icon">⏱️</div>
                         <h4>Employee DTR App</h4>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">PySide6</span>
+                            <span class="project-tag">SQLAlchemy</span>
+                        </div>
                         <p>A modern, production-ready desktop application built with Python, PySide6, and SQLAlchemy featuring secure, automated timekeeping.</p>
                         <div class="project-links">
                             <a href="https://github.com/KirbyClaro/employee_daily_time_record_app" target="_blank">💻 View on GitHub</a>
@@ -394,6 +443,11 @@
                     <div class="project-card">
                         <div class="project-icon">🧠</div>
                         <h4>OS Algorithms</h4>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">CPU Scheduling</span>
+                            <span class="project-tag">Memory Paging</span>
+                        </div>
                         <p>A technical collection of core Operating System implementations in Python, covering CPU scheduling, memory management, and paging.</p>
                         <div class="project-links">
                             <a href="https://github.com/KirbyClaro/operating_system_algorithms" target="_blank">💻 View on GitHub</a>
@@ -403,6 +457,11 @@
                     <div class="project-card">
                         <div class="project-icon">🌐</div>
                         <h4>Request System</h4>
+                        <div class="project-tags">
+                            <span class="project-tag">JavaScript</span>
+                            <span class="project-tag">HTML/CSS</span>
+                            <span class="project-tag">Firebase</span>
+                        </div>
                         <p>A specialized web-based management tool developed to securely streamline and automate operational administrative workflows.</p>
                         <div class="project-links">
                             <a href="https://github.com/KirbyClaro/request_system" target="_blank">💻 View on GitHub</a>
@@ -704,6 +763,9 @@
         </main>
     </div>
 
+    <!-- Floating Back to Top Button -->
+    <button id="back-to-top" onclick="scrollToTop()" title="Back to top">↑</button>
+
     <div id="document-modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
@@ -727,6 +789,25 @@
 
         let allDocuments = []; 
         let activeDocFilter = 'all';
+
+        // Scroll to Top Logic
+        const mainContentScroll = document.getElementById('main-content-scroll');
+        const topBtn = document.getElementById("back-to-top");
+
+        function handleScroll() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300 || mainContentScroll.scrollTop > 300) {
+                topBtn.style.display = "flex";
+            } else {
+                topBtn.style.display = "none";
+            }
+        }
+        window.addEventListener('scroll', handleScroll);
+        mainContentScroll.addEventListener('scroll', handleScroll);
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            mainContentScroll.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
         // Modern Toast Notification Function
         function showToast(message, type = 'success') {
