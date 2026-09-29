@@ -135,14 +135,12 @@
         .project-card { background: #fff; border: 1px solid #eee; border-radius: 12px; padding: 25px; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; position: relative; overflow: hidden; }
         .project-card::before { content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--pup-gold); transition: width 0.3s ease; opacity: 0.8; }
         
-        /* New Micro-interaction Hover */
         .project-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(241, 196, 15, 0.15); border-color: var(--pup-gold); }
         .project-card:hover::before { width: 6px; background: var(--pup-maroon); opacity: 1; }
         
         .project-icon { font-size: 28px; margin-bottom: 15px; background: #f9f9f9; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 10px; }
         .project-card h4 { color: #222; font-size: 17px; margin-bottom: 10px; }
         
-        /* Project Tech Stack Tags */
         .project-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 15px; }
         .project-tag { font-size: 10px; font-weight: 600; padding: 4px 10px; border-radius: 8px; background: #eee; color: #555; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.3s; }
         .project-card:hover .project-tag { background: #fdf5f5; color: var(--pup-maroon); }
@@ -293,10 +291,7 @@
 
         .value-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 15px; margin-top: 20px; }
         .value-card { background: #fdfdfd; border: 1px solid #eee; padding: 20px; border-radius: 12px; transition: all 0.3s ease; border-left: 4px solid var(--pup-maroon); }
-        
-        /* New Micro-interaction Hover */
         .value-card:hover { transform: translateY(-4px); box-shadow: 0 8px 25px rgba(241, 196, 15, 0.15); border-left-color: var(--pup-gold); background: #fff; }
-        
         .value-icon { font-size: 28px; margin-bottom: 10px; display: inline-block; transition: transform 0.3s; }
         .value-card:hover .value-icon { transform: scale(1.1) rotate(5deg); }
         .value-card h4 { color: var(--pup-maroon); font-size: 15px; margin-bottom: 8px; }
@@ -340,11 +335,7 @@
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 9999;
         }
-
-        #back-to-top:hover {
-            transform: translateY(-5px) scale(1.1);
-            background-color: #600000;
-        }
+        #back-to-top:hover { transform: translateY(-5px) scale(1.1); background-color: #600000; }
 
         /* Footer */
         footer { margin-top: auto; padding: 25px 0 10px 0; text-align: center; border-top: 1px solid #eaeaea; color: #888; font-size: 13px; }
@@ -639,6 +630,8 @@
 
             <section id="upload-reqs" class="content-section">
                 <h2 class="section-header">Upload OJT Requirements (Admin)</h2>
+                
+                <h3 style="color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px;">Pre-Deployment & Active Requirements</h3>
                 <p style="margin-bottom: 25px; color: #666;">Secured Portal. Upload your official documents here.</p>
                 
                 <div class="card">
@@ -686,6 +679,35 @@
                     <input type="file" id="file-app" accept=".pdf,.jpg,.png">
                     <button class="btn" onclick="triggerUpload('file-app', 'Approval Sheet')">Upload Approval</button>
                 </div>
+
+                <!-- NEW POST-OJT EVALUATIONS SECTION -->
+                <h3 style="margin-top: 40px; color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px;">Post-OJT Requirements (Evaluations)</h3>
+                
+                <div class="card">
+                    <h3>Training Supervisor Form</h3>
+                    <input type="file" id="file-eval-supervisor" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-supervisor', 'Training Supervisor Form')">Upload Form</button>
+                </div>
+                <div class="card">
+                    <h3>HTE Performance</h3>
+                    <input type="file" id="file-eval-hte" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-hte', 'HTE Performance Evaluation')">Upload Evaluation</button>
+                </div>
+                <div class="card">
+                    <h3>OJT Adviser Performance</h3>
+                    <input type="file" id="file-eval-adviser" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-adviser', 'OJT Adviser Performance Evaluation')">Upload Evaluation</button>
+                </div>
+                <div class="card">
+                    <h3>Trainee Performance</h3>
+                    <input type="file" id="file-eval-intern" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-intern', 'Trainee Performance Evaluation')">Upload Evaluation</button>
+                </div>
+                <div class="card">
+                    <h3>Performance Evaluation (Grading System)</h3>
+                    <input type="file" id="file-eval-grading" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-grading', 'Performance Evaluation Grading System')">Upload Grading</button>
+                </div>
             </section>
 
             <section id="view-reqs" class="content-section">
@@ -695,7 +717,7 @@
                     <div class="progress-card">
                         <div class="progress-title-flex">
                             <h4>📋 OJT Documentation Checklist Progress</h4>
-                            <span class="progress-percentage" id="doc-progress-text">0 of 9 Completed (0%)</span>
+                            <span class="progress-percentage" id="doc-progress-text">0 of 14 Completed (0%)</span>
                         </div>
                         <div class="progress-bar-bg">
                             <div class="progress-bar-fill" id="doc-progress-fill"></div>
@@ -843,7 +865,7 @@
         });
 
         function updateDocProgressBar() {
-            const totalRequired = 9;
+            const totalRequired = 14; // UPDATED to track the 9 pre-OJT files + 5 post-OJT evaluation files
             const uniqueTypes = new Set(allDocuments.map(d => d.docType));
             const count = uniqueTypes.size;
             const percentage = Math.min(Math.round((count / totalRequired) * 100), 100);
@@ -883,9 +905,9 @@
 
             docGrid.innerHTML = "";
             filtered.forEach((data) => {
-                const isPdf = data.fileType.includes('pdf');
+                const isPdf = data.fileType.includes('pdf') || data.fileType.includes('document'); // Added document support for .docx
                 const badgeClass = isPdf ? 'badge-pdf' : 'badge-img';
-                const badgeLabel = isPdf ? 'PDF' : 'IMAGE';
+                const badgeLabel = isPdf ? 'DOC/PDF' : 'IMAGE';
                 const iconHtml = isPdf ? '📕' : '🖼️';
                 
                 let formattedDate = "Uploaded Recently";
@@ -1170,7 +1192,12 @@
         function openModal(fileUrl, fileType) {
             const modal = document.getElementById('document-modal');
             const viewer = document.getElementById('modal-viewer');
-            viewer.innerHTML = fileType.includes('pdf') ? `<iframe src="${fileUrl}#toolbar=0"></iframe>` : `<img src="${fileUrl}" class="modal-img">`;
+            
+            // Added support to fallback to image viewer if document format cannot be natively previewed in an iframe
+            viewer.innerHTML = (fileType.includes('pdf') || fileType.includes('text')) 
+                ? `<iframe src="${fileUrl}#toolbar=0"></iframe>` 
+                : `<img src="${fileUrl}" class="modal-img">`;
+                
             modal.style.display = 'flex';
         }
 
