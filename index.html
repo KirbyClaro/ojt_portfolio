@@ -680,7 +680,7 @@
                     <button class="btn" onclick="triggerUpload('file-app', 'Approval Sheet')">Upload Approval</button>
                 </div>
 
-                <h3 style="margin-top: 40px; color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px;">Post-OJT Requirements (Evaluations)</h3>
+                <h3 style="margin-top: 40px; color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px;">Post-OJT Requirements (Evaluations & Final Docs)</h3>
                 
                 <div class="card">
                     <h3>Training Supervisor Form</h3>
@@ -707,6 +707,12 @@
                     <input type="file" id="file-eval-grading" accept=".pdf,.doc,.docx,.jpg,.png">
                     <button class="btn" onclick="triggerUpload('file-eval-grading', 'Performance Evaluation Grading System')">Upload Grading</button>
                 </div>
+                <!-- NEW: Certificate of Completion -->
+                <div class="card">
+                    <h3 style="color: var(--pup-gold); text-shadow: 0px 1px 1px rgba(0,0,0,0.1);">Certificate of Completion</h3>
+                    <input type="file" id="file-eval-cert" accept=".pdf,.doc,.docx,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-eval-cert', 'Certificate of Completion')">Upload Certificate</button>
+                </div>
             </section>
 
             <section id="view-reqs" class="content-section">
@@ -716,7 +722,8 @@
                     <div class="progress-card">
                         <div class="progress-title-flex">
                             <h4>📋 OJT Documentation Checklist Progress</h4>
-                            <span class="progress-percentage" id="doc-progress-text">0 of 14 Completed (0%)</span>
+                            <!-- UPDATED ID TEXT -->
+                            <span class="progress-percentage" id="doc-progress-text">0 of 15 Completed (0%)</span>
                         </div>
                         <div class="progress-bar-bg">
                             <div class="progress-bar-fill" id="doc-progress-fill"></div>
@@ -736,7 +743,6 @@
                     </div>
                 </div>
 
-                <!-- NEW: Split Document Grids -->
                 <h3 style="color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px; margin-top: 15px; font-size: 18px;">Pre-Deployment Requirements</h3>
                 <div class="doc-grid" id="pre-doc-grid">
                     <div class="empty-state" style="grid-column: 1 / -1;">Loading documents...</div>
@@ -823,7 +829,8 @@
             'HTE Performance Evaluation',
             'OJT Adviser Performance Evaluation',
             'Trainee Performance Evaluation',
-            'Performance Evaluation Grading System'
+            'Performance Evaluation Grading System',
+            'Certificate of Completion' // <--- NEW REQUIREMENT ADDED TO ARRAY
         ];
 
         // Scroll to Top Logic
@@ -879,7 +886,7 @@
         });
 
         function updateDocProgressBar() {
-            const totalRequired = 14; 
+            const totalRequired = 15; // <--- TOTAL COUNT BUMPED TO 15
             const uniqueTypes = new Set(allDocuments.map(d => d.docType));
             const count = uniqueTypes.size;
             const percentage = Math.min(Math.round((count / totalRequired) * 100), 100);
