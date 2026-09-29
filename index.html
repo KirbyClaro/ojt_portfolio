@@ -680,7 +680,6 @@
                     <button class="btn" onclick="triggerUpload('file-app', 'Approval Sheet')">Upload Approval</button>
                 </div>
 
-                <!-- NEW POST-OJT EVALUATIONS SECTION -->
                 <h3 style="margin-top: 40px; color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px;">Post-OJT Requirements (Evaluations)</h3>
                 
                 <div class="card">
@@ -737,11 +736,17 @@
                     </div>
                 </div>
 
-                <div class="doc-grid" id="doc-grid">
-                    <div class="empty-state" id="doc-empty" style="grid-column: 1 / -1;">
-                        Loading your saved documents...
-                    </div>
+                <!-- NEW: Split Document Grids -->
+                <h3 style="color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px; margin-top: 15px; font-size: 18px;">Pre-Deployment Requirements</h3>
+                <div class="doc-grid" id="pre-doc-grid">
+                    <div class="empty-state" style="grid-column: 1 / -1;">Loading documents...</div>
                 </div>
+
+                <h3 style="color: var(--pup-maroon); border-bottom: 2px solid #eaeaea; padding-bottom: 10px; margin-bottom: 20px; margin-top: 40px; font-size: 18px;">Post-Deployment Requirements</h3>
+                <div class="doc-grid" id="post-doc-grid">
+                    <div class="empty-state" style="grid-column: 1 / -1;">Loading documents...</div>
+                </div>
+
             </section>
 
             <section id="reports" class="content-section">
@@ -812,6 +817,15 @@
         let allDocuments = []; 
         let activeDocFilter = 'all';
 
+        // Post-Deployment category names exactly as they are saved in Firebase
+        const postDeploymentTypes = [
+            'Training Supervisor Form',
+            'HTE Performance Evaluation',
+            'OJT Adviser Performance Evaluation',
+            'Trainee Performance Evaluation',
+            'Performance Evaluation Grading System'
+        ];
+
         // Scroll to Top Logic
         const mainContentScroll = document.getElementById('main-content-scroll');
         const topBtn = document.getElementById("back-to-top");
@@ -865,7 +879,7 @@
         });
 
         function updateDocProgressBar() {
-            const totalRequired = 14; // UPDATED to track the 9 pre-OJT files + 5 post-OJT evaluation files
+            const totalRequired = 14; 
             const uniqueTypes = new Set(allDocuments.map(d => d.docType));
             const count = uniqueTypes.size;
             const percentage = Math.min(Math.round((count / totalRequired) * 100), 100);
@@ -886,7 +900,8 @@
         }
 
         function renderDocuments() {
-            const docGrid = document.getElementById('doc-grid');
+            const preGrid = document.getElementById('pre-doc-grid');
+            const postGrid = document.getElementById('post-doc-grid');
             const searchQuery = document.getElementById('doc-search-input').value.toLowerCase();
 
             let filtered = allDocuments.filter(doc => {
@@ -898,14 +913,20 @@
                 return matchesSearch;
             });
 
+            preGrid.innerHTML = "";
+            postGrid.innerHTML = "";
+
+            let preCount = 0;
+            let postCount = 0;
+
             if (filtered.length === 0) {
-                docGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No documents found matching your criteria.</div>`;
+                preGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No documents found matching your criteria.</div>`;
+                postGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No documents found matching your criteria.</div>`;
                 return;
             }
 
-            docGrid.innerHTML = "";
             filtered.forEach((data) => {
-                const isPdf = data.fileType.includes('pdf') || data.fileType.includes('document'); // Added document support for .docx
+                const isPdf = data.fileType.includes('pdf') || data.fileType.includes('document'); 
                 const badgeClass = isPdf ? 'badge-pdf' : 'badge-img';
                 const badgeLabel = isPdf ? 'DOC/PDF' : 'IMAGE';
                 const iconHtml = isPdf ? '📕' : '🖼️';
@@ -933,8 +954,19 @@
                         <a href="${data.url}" target="_blank" download class="download-btn" title="Direct Download">⬇️</a>
                     </div>
                 `;
-                docGrid.appendChild(card);
+
+                // Sort the document into the correct grid based on its docType
+                if (postDeploymentTypes.includes(data.docType)) {
+                    postGrid.appendChild(card);
+                    postCount++;
+                } else {
+                    preGrid.appendChild(card);
+                    preCount++;
+                }
             });
+
+            if (preCount === 0) preGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No pre-deployment documents uploaded yet.</div>`;
+            if (postCount === 0) postGrid.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;">No post-deployment documents uploaded yet.</div>`;
         }
 
         // Load Weekly Reports with Timeline UI
@@ -1193,7 +1225,6 @@
             const modal = document.getElementById('document-modal');
             const viewer = document.getElementById('modal-viewer');
             
-            // Added support to fallback to image viewer if document format cannot be natively previewed in an iframe
             viewer.innerHTML = (fileType.includes('pdf') || fileType.includes('text')) 
                 ? `<iframe src="${fileUrl}#toolbar=0"></iframe>` 
                 : `<img src="${fileUrl}" class="modal-img">`;
