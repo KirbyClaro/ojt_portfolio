@@ -674,6 +674,12 @@
                     <input type="file" id="file-waiver" accept=".pdf,.jpg,.png">
                     <button class="btn" onclick="triggerUpload('file-waiver', 'Student Waiver')">Upload Waiver</button>
                 </div>
+                <!-- NEW: Consent Form -->
+                <div class="card">
+                    <h3>Consent Form</h3>
+                    <input type="file" id="file-consent" accept=".pdf,.jpg,.png">
+                    <button class="btn" onclick="triggerUpload('file-consent', 'Consent Form')">Upload Consent Form</button>
+                </div>
                 <div class="card">
                     <h3>Approval Sheet</h3>
                     <input type="file" id="file-app" accept=".pdf,.jpg,.png">
@@ -707,7 +713,6 @@
                     <input type="file" id="file-eval-grading" accept=".pdf,.doc,.docx,.jpg,.png">
                     <button class="btn" onclick="triggerUpload('file-eval-grading', 'Performance Evaluation Grading System')">Upload Grading</button>
                 </div>
-                <!-- NEW: Certificate of Completion -->
                 <div class="card">
                     <h3 style="color: var(--pup-gold); text-shadow: 0px 1px 1px rgba(0,0,0,0.1);">Certificate of Completion</h3>
                     <input type="file" id="file-eval-cert" accept=".pdf,.doc,.docx,.jpg,.png">
@@ -723,7 +728,7 @@
                         <div class="progress-title-flex">
                             <h4>📋 OJT Documentation Checklist Progress</h4>
                             <!-- UPDATED ID TEXT -->
-                            <span class="progress-percentage" id="doc-progress-text">0 of 15 Completed (0%)</span>
+                            <span class="progress-percentage" id="doc-progress-text">0 of 16 Completed (0%)</span>
                         </div>
                         <div class="progress-bar-bg">
                             <div class="progress-bar-fill" id="doc-progress-fill"></div>
@@ -830,7 +835,7 @@
             'OJT Adviser Performance Evaluation',
             'Trainee Performance Evaluation',
             'Performance Evaluation Grading System',
-            'Certificate of Completion' // <--- NEW REQUIREMENT ADDED TO ARRAY
+            'Certificate of Completion'
         ];
 
         // Scroll to Top Logic
@@ -886,7 +891,7 @@
         });
 
         function updateDocProgressBar() {
-            const totalRequired = 15; // <--- TOTAL COUNT BUMPED TO 15
+            const totalRequired = 16; // <--- TOTAL COUNT BUMPED TO 16
             const uniqueTypes = new Set(allDocuments.map(d => d.docType));
             const count = uniqueTypes.size;
             const percentage = Math.min(Math.round((count / totalRequired) * 100), 100);
