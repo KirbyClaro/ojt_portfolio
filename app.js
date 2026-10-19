@@ -1,11 +1,11 @@
 // Initialize Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyCT16wNKYuuR9NO7GEXrJepYiX3qQPemAY",
-    authDomain: "ojt-portfolio-web.firebaseapp.com",
-    projectId: "ojt-portfolio-web",
-    storageBucket: "ojt-portfolio-web.firebasestorage.app",
-    messagingSenderId: "345342334262",
-    appId: "1:345342334262:web:35493d011eb7406b530f97"
+    apiKey: "AIzaSyD7tc1Hb5qg8wKF7z26NIhbniNfYiDsIY4",
+    authDomain: "ojt-portfolio-free.firebaseapp.com",
+    projectId: "ojt-portfolio-free",
+    storageBucket: "ojt-portfolio-free.firebasestorage.app",
+    messagingSenderId: "589766813412",
+    appId: "1:589766813412:web:c8df0a6aaf6fa57de9eef1"
 };
 
 firebase.initializeApp(firebaseConfig);
