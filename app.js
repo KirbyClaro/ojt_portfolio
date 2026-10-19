@@ -450,39 +450,3 @@ function closeModal() { document.getElementById('document-modal').style.display 
 
 // Close modal on outside click
 window.onclick = function(event) { if (event.target == document.getElementById('document-modal')) closeModal(); }
-
-// TEMPORARY ADMIN SCRIPT - Run this once to load your documents manually
-async function loadOfflineDocuments() {
-    const myFinalDocs = [
-        // Pre-Deployment (10 files)
-        { docType: "Curriculum Vitae (CV)", fileName: "Resume.pdf", fileType: "application/pdf", url: "ojt-docs/Resume.pdf" },
-        { docType: "Memorandum of Agreement (MOA)", fileName: "MOA.pdf", fileType: "application/pdf", url: "ojt-docs/MOA.pdf" },
-        { docType: "Letter of Endorsement (LOE)", fileName: "LOE.pdf", fileType: "application/pdf", url: "ojt-docs/LOE.pdf" },
-        { docType: "Letter of Intent (LOI)", fileName: "LOI.pdf", fileType: "application/pdf", url: "ojt-docs/LOI.pdf" },
-        { docType: "Medical Certificate", fileName: "MedicalCertificate.pdf", fileType: "application/pdf", url: "ojt-docs/MedicalCertificate.pdf" },
-        { docType: "Insurance", fileName: "Insurance.pdf", fileType: "application/pdf", url: "ojt-docs/Insurance.pdf" },
-        { docType: "Internship Agreement", fileName: "InternshipAgreement.pdf", fileType: "application/pdf", url: "ojt-docs/InternshipAgreement.pdf" },
-        { docType: "Student Waiver", fileName: "Waiver.pdf", fileType: "application/pdf", url: "ojt-docs/Waiver.pdf" },
-        { docType: "Consent Form", fileName: "Consent.pdf", fileType: "application/pdf", url: "ojt-docs/Consent.pdf" },
-        { docType: "Approval Sheet", fileName: "ApprovalSheet.pdf", fileType: "application/pdf", url: "ojt-docs/ApprovalSheet.pdf" },
-        
-        // Post-Deployment (6 files)
-        { docType: "Training Supervisor Form", fileName: "TrainingSupervisorForm.pdf", fileType: "application/pdf", url: "ojt-docs/TrainingSupervisorForm.pdf" },
-        { docType: "HTE Performance Evaluation", fileName: "HTEPerformance.pdf", fileType: "application/pdf", url: "ojt-docs/HTEPerformance.pdf" },
-        { docType: "OJT Adviser Performance Evaluation", fileName: "OJTAdviserPerformanceEvaluation.pdf", fileType: "application/pdf", url: "ojt-docs/OJTAdviserPerformanceEvaluation.pdf" },
-        { docType: "Trainee Performance Evaluation", fileName: "EvaluationInstrumentforstudentintern.pdf", fileType: "application/pdf", url: "ojt-docs/EvaluationInstrumentforstudentintern.pdf" },
-        { docType: "Performance Evaluation Grading System", fileName: "PerformanceEvaluationGradingSystem.pdf", fileType: "application/pdf", url: "ojt-docs/PerformanceEvaluationGradingSystem.pdf" },
-        { docType: "Certificate of Completion", fileName: "COC.pdf", fileType: "application/pdf", url: "ojt-docs/COC.pdf" }
-    ];
-
-    for (let doc of myFinalDocs) {
-        await db.collection("documents").add({
-            docType: doc.docType,
-            fileName: doc.fileName,
-            fileType: doc.fileType,
-            url: doc.url,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
-    }
-    alert("Success! All 16 offline documents are loaded into the database.");
-}
